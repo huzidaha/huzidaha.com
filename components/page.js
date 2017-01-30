@@ -24,7 +24,7 @@ export default class extends Component {
           display: 'flex',
           alignItems: 'stretch',
           background: '#1b1920',
-          padding: '0 50px',
+          padding: '0 45px',
           height: '66px'
         }}>
           <Link href='/'>
@@ -38,14 +38,22 @@ export default class extends Component {
                 marginBottom: '3px'
               }} />
               <span style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
                 backgroundColor: s.primaryColor(0.6),
+                width: '32px',
+                height: '32px',
                 borderRadius: '4px',
-                padding: '5px 5px',
                 fontSize: '12px',
                 color: '#ffffff',
                 marginLeft: '10px',
                 marginRight: '20px'
-              }}>胡子大哈</span>
+              }}>
+                <span>胡子</span>
+                <span>大哈</span>
+              </span>
             </a>
           </Link>
           <Link href='/'>
