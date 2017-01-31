@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import _ from 'ramda'
+// import { log } from '../../common/fp'
 
 export default class Crud {
   constructor (router, Model) {
@@ -48,10 +49,11 @@ export default class Crud {
 
   update (before, after) {
     this.router.put('/:id', this.wrap(before, after, async (ctx) => {
-      const data = await this.Model.findOne({ _id: ctx.params.id })
-      Object.assign(data, ctx.request.body)
-      await data.save()
-      return data
+      const saveData = _.compose(
+        _.prop('save'),
+        _.merge(ctx.request.body)
+      )
+      return saveData(await this.Model.find({ _id: ctx.params.id }))
     }))
   }
 
@@ -66,13 +68,15 @@ export default class Crud {
 
   list (before, after) {
     this.router.get('/', this.wrap(before, after, (ctx) => {
-      let { offset, limit } = ctx.request.query
-      offset = offset * 1 || 0
-      limit = limit * 1 || 10
+      const getDefaultFromQuery = (prop, defaultValue) => _.compose(
+        _.defaultTo(defaultValue),
+        parseInt,
+        _.path(['request', 'query', prop])
+      )
       return this.Model
         .find({})
-        .skip(offset)
-        .limit(limit)
+        .skip(getDefaultFromQuery('limit', 0)(ctx))
+        .limit(getDefaultFromQuery('offset', 10)(ctx))
     }))
   }
 }
