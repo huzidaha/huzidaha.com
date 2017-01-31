@@ -1,3 +1,4 @@
+import _ from 'ramda'
 import fetch from 'isomorphic-fetch'
 import { BACKEND_URL } from '../config'
 
@@ -23,7 +24,7 @@ const makeGetUrl = (path, params) => {
 export class ApiClient {
   constructor () {
     methods.forEach((method) => {
-      this[method] = async (path, params) => {
+      this[method] = _.curryN(method === 'get' || method === 'delete' ? 1 : 2, async (path, params) => {
         const headers = {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -59,9 +60,10 @@ export class ApiClient {
             }
           }
         } catch (e) {
+          console.log(e)
           return Promise.reject('网络连接错误')
         }
-      }
+      })
     })
   }
 }

@@ -23,3 +23,7 @@ export const getPath = _.curry((obj, path) => {
 export const setPath = _.curry((obj, path, value) => {
   return (new Function('obj', 'value', `return obj${updatedPath(path)} = value`))(obj, value)
 })
+
+export const alwaysAlert = (words) => () => {
+  alert(words)
+}

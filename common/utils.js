@@ -10,3 +10,15 @@ export const twoWayBinding = _.curry((component, path) => {
     }
   }
 })
+
+export const showError = (err) => {
+  alert(err)
+}
+
+export const wrapWithAlertError = (fn) => async (...params) => {
+  try {
+    await fn(..._.clone(params)) // 谁知道你在写什么
+  } catch (e) {
+    alert(`错误：${e}`)
+  }
+}

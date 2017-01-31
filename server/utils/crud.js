@@ -75,8 +75,9 @@ export default class Crud {
       )
       return this.Model
         .find({})
-        .skip(getDefaultFromQuery('limit', 0)(ctx))
-        .limit(getDefaultFromQuery('offset', 10)(ctx))
+        .skip(getDefaultFromQuery('offset', 0)(ctx))
+        .sort('-_id')
+        .limit(getDefaultFromQuery('limit', 10)(ctx))
     }))
   }
 }
