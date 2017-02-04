@@ -4,7 +4,7 @@
   "description": "huzidaha.com",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava",
     "dev": "babel-node ./server/index.js",
     "start": "NODE_ENV=production node ./index.js",
     "build": "rm -rf build && next build && babel ./server/ --out-dir build && mv .next ./build && cp -a static ./build/ && cp package.json ./build/"
@@ -34,6 +34,7 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "ava": "^0.18.1",
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.1",
     "babel-plugin-import": "^1.1.0",

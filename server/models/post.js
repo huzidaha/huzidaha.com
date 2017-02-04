@@ -14,6 +14,8 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Tag'
   }
+}, {
+  timestamps: true
 })
 
 const Post = mongoose.model('Post', postSchema)
