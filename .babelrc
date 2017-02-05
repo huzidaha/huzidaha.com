@@ -1,9 +1,0 @@
-{
-  "presets": [
-    "next/babel",
-    "stage-0"
-  ],
-  "plugins": [
-    ["import" , [{ "libraryName": "antd" }]]
-  ]
-}

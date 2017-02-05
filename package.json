@@ -18,6 +18,24 @@
   "bugs": {
     "url": "https://github.com/huzidaha/huzidaha.com/issues"
   },
+  "babel": {
+    "presets": [
+      "next/babel",
+      "es2015"
+    ],
+    "plugins": [
+      ["import" , [{ "libraryName": "antd" }]]
+    ]
+  },
+  "ava": {
+    "require": ["babel-register"],
+    "babel": {
+      "presets": [
+        "@ava/stage-4",
+        "@ava/transform-test-files"
+      ]
+    }
+  },
   "homepage": "https://github.com/huzidaha/huzidaha.com#readme",
   "dependencies": {
     "joi": "^10.1.0",

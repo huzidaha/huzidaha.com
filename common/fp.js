@@ -27,3 +27,5 @@ export const setPath = _.curry((obj, path, value) => {
 export const alwaysAlert = (words) => () => {
   alert(words)
 }
+
+export const funcArgs = (fn) => (...args) => _.converge(fn, args)
