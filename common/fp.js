@@ -16,6 +16,11 @@ export const updatedPath = _.ifElse(
   )
 )
 
+export const compose2 = _.curry((f, g) => (x, y) => f(g(x, y)))
+export const extractPropsApplyFunc = _.curry((props, fn, obj) => fn(..._.props(props, obj)))
+export const pickArgN = _.curry((index, fn) => fn((...args) => args[index]))
+export const mergeArgs = (fn) => (x, y) => fn(x)(y)
+
 export const getPath = _.curry((obj, path) => {
   return (new Function('obj', `return obj${updatedPath(path)}`))(obj)
 })

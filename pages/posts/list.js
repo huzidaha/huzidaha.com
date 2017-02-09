@@ -1,7 +1,6 @@
 import { Component, PropTypes } from 'react'
 import _ from 'ramda'
 import Link from 'next/link'
-import moment from 'moment'
 import apiClient from '../../common/apiClient'
 import Page from '../../components/page.js'
 import { wrapWithAlertError, makeEntityDate } from '../../common/utils'
@@ -44,10 +43,19 @@ export default class extends Component {
           {this.state.posts.map((post, i) => {
             return (
               <li key={post._id}>
-                <span>{i + 1}. </span>
-                <span>{post.title}</span>
-                <span> 生产日期：{makeEntityDate(post.createdAt)}</span>
-                <span> 加工日期：{makeEntityDate(post.updatedAt)}</span>
+                <Link href={`/posts/detail?postId=${post._id}`}>
+                  <a>
+                    <span>{i + 1}. </span>
+                    <span>{post.title}</span>
+                    <span> 生产日期：{makeEntityDate(post.createdAt)}</span>
+                    <span> 加工日期：{makeEntityDate(post.updatedAt)}</span>
+                  </a>
+                </Link>
+                <button>
+                  <Link href={`/posts/create?postId=${post._id}`}>
+                    <a>Edit</a>
+                  </Link>
+                </button>
                 <button onClick={this.handleDeletePost.bind(this, post, i)}>Delete</button>
               </li>
             )

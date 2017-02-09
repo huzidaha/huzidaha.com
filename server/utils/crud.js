@@ -1,4 +1,4 @@
-import _ from 'ramda'
+import _ from 'lodash/fp'
 // import { log } from '../../common/fp'
 
 export default class Crud {
@@ -22,7 +22,7 @@ export default class Crud {
   }
 
   except (...args) {
-    this.all(_.pull(this.methods, ...args))
+    this.all(_.pull(...args, this.methods))
   }
 
   wrap (before, after, fn) {
@@ -49,11 +49,10 @@ export default class Crud {
 
   update (before, after) {
     this.router.put('/:id', this.wrap(before, after, async (ctx) => {
-      const saveData = _.compose(
-        _.prop('save'),
-        _.merge(ctx.request.body)
+      return this.Model.findOneAndUpdate(
+        { _id: ctx.params.id },
+        Object.assign(ctx.request.body, { updatedAt: +new Date() })
       )
-      return saveData(await this.Model.find({ _id: ctx.params.id }))
     }))
   }
 

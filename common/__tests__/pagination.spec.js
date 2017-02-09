@@ -1,8 +1,6 @@
 import test from 'ava'
 import {
   createPagination,
-  nextPage,
-  prevPage,
   currentPage,
   pageCount,
   nextPagePagination,
@@ -12,8 +10,6 @@ import {
 
 test('测试分页组件功能的正确性', (t) => {
   let pagination = createPagination(100, 10, 1)
-  t.is(nextPage(pagination), 2)
-  t.is(prevPage(pagination), 1)
   // 下一页功能
   pagination = nextPagePagination(pagination)
   t.is(currentPage(pagination), 2)

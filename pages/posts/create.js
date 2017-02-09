@@ -2,21 +2,23 @@ import { Component, PropTypes } from 'react'
 import Link from 'next/link'
 import _ from 'ramda'
 import Page from '../../components/page.js'
-import { twoWayBinding } from '../../common/utils'
 import apiClient from '../../common/apiClient'
-import { wrapWithAlertError } from '../../common/utils'
+import { wrapWithAlertError, twoWayBinding } from '../../common/utils'
 import { Either } from 'ramda-fantasy'
-import { log } from '../../common/fp'
 
 export default class extends Component {
-  static async getInitialProps () {
+  static async getInitialProps ({ query }) {
     return {
-      tags: await apiClient.get('/tags?offset=0&limit=100000')
+      tags: await apiClient.get('/tags?offset=0&limit=100000'),
+      post: query.postId
+        ? await apiClient.get(`/posts/${query.postId}`)
+        : null
     }
   }
 
   static propTypes = {
-    tags: PropTypes.array
+    tags: PropTypes.array,
+    post: PropTypes.object
   }
 
   constructor () {
@@ -32,8 +34,13 @@ export default class extends Component {
 
   componentWillMount () {
     this.setState({
-      tags: this.props.tags
+      tags: this.props.tags,
+      post: this.props.post || this.state.post
     })
+  }
+
+  get _isUpdate () {
+    return !!this.props.post
   }
 
   async createPost () {
@@ -61,11 +68,15 @@ export default class extends Component {
   }
 
   sendPost = wrapWithAlertError(async (post) => {
-    await apiClient.post('/posts', post)
+    if (this._isUpdate) {
+      await apiClient.put(`/posts/${post._id}`, post)
+    } else {
+      await apiClient.post('/posts', post)
+      this.setState({
+        post: { title: '', content: '', tag: '' }
+      })
+    }
     alert('OK')
-    this.setState({
-      post: { title: '', content: '', tag: '' }
-    })
   })
 
   render () {
@@ -87,7 +98,9 @@ export default class extends Component {
             <a>修改标签</a>
           </Link>
         </div>
-        <button onClick={::this.createPost}>新增</button>
+        <button onClick={this.createPost.bind(this)}>
+          {this._isUpdate ? '修改' : '新增'}
+        </button>
       </Page>
     )
   }
