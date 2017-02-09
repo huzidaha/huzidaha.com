@@ -13,7 +13,7 @@ import hljs from 'highlight.js'
 export default class extends Component {
   static async getInitialProps ({ query }) {
     return {
-      post: await apiClient.get(`/posts/${query.postId}`)
+      post: await apiClient.get(`/posts/${query.postId}?useMarkdownContent=true`)
     }
   }
 

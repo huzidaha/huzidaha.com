@@ -10,7 +10,10 @@ crud.except('read')
 crud.read(null, async (ctx, ret) => {
   const post = await ret
   const jsonPost = post.toJSON()
-  jsonPost.markdownContent = marked(post.content)
+  if (ctx.request.query.useMarkdownContent) {
+    jsonPost.markdownContent = marked(post.content)
+    delete jsonPost.content
+  }
   return jsonPost
 })
 

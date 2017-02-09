@@ -134,20 +134,27 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   padding: 0;
 }
 
-.post-content h2 {
-  padding-bottom: 0.3em;
-  font-size: 1.5em;
-  border-bottom: 1px solid #eee;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.post-content h3 {
-  font-size: 1.25em;
+.post-content h2,
+.post-content h3,
+.post-content h4 {
   margin-top: 24px;
   margin-bottom: 16px;
   font-weight: 600;
   line-height: 1.25;
+}
+
+.post-content h2 {
+  font-size: 1.5em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.3em;
+}
+
+.post-content h3 {
+  font-size: 1.25em;
+}
+
+.post-content h4 {
+  font-size: 1em;
 }
 
 a {
