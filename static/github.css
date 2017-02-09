@@ -150,14 +150,10 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   line-height: 1.25;
 }
 
-a:hover {
-  color: rgba(237, 29, 31, 0.6);
-}
-
-a:visited {
-  color: rgba(237, 29, 31, 0.5);
-}
-
 a {
+  color: rgba(190, 29, 31, 1);
+}
+
+a:hover {
   color: rgb(237, 29, 31);
 }
