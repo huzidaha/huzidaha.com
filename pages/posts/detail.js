@@ -8,6 +8,7 @@ import { wrapWithAlertError } from '../../common/utils'
 import moment from 'moment'
 import { makeEntityDate } from '../../common/utils'
 import Avatar from '../../components/avatar'
+import hljs from 'highlight.js'
 
 export default class extends Component {
   static async getInitialProps ({ query }) {
@@ -18,6 +19,13 @@ export default class extends Component {
 
   static propTypes = {
     post: PropTypes.object
+  }
+
+  componentDidMount () {
+    /* 代码高亮 */
+    Array.from(this.refs['post-content'].querySelectorAll('pre')).map((pre) => {
+      hljs.highlightBlock(pre)
+    })
   }
 
   render () {
@@ -58,7 +66,7 @@ export default class extends Component {
               </span>
             </div>
           </div>
-          <div style={{ padding }} className='post-content' dangerouslySetInnerHTML={{__html: post.markdownContent}} />
+          <div ref='post-content' style={{ padding }} className='post-content' dangerouslySetInnerHTML={{__html: post.markdownContent}} />
         </div>
       </Page>
     )
