@@ -4,6 +4,7 @@ import Router from 'koa-router'
 import fs from 'fs'
 import bodyParser from 'koa-body'
 import logger from 'koa-logger'
+import less from 'less'
 import 'isomorphic-fetch'
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -19,9 +20,8 @@ function startServer () {
         ? app.oldRun(req, res)
         : serveBackendApi(req, res)
     }
-    if (dev) {
-      watchFilesAndResetBackendApiCallback()
-    }
+    compileLessStyle()
+    if (dev) watchFiles()
   }).catch((e) => {
     console.log(e.stack)
   })
@@ -52,10 +52,39 @@ function serveBackendApi (req, res) {
   })
 }
 
-function watchFilesAndResetBackendApiCallback () {
+const styleMainEntryFileName = './styles/index.less'
+
+function watchFiles () {
+  console.log('Start to watch files...')
   fs.watch('./server/', { recursive: true }, (event, filename) => {
     backendApiCallback = getBackendApiCallback()
     console.log(`${filename} ${event}, restarting routes.`)
+  })
+  fs.watch(styleMainEntryFileName, compileLessStyle)
+}
+
+let isStylePending = false
+function compileLessStyle (event, filename) {
+  if (filename) console.log(`${filename} ${event}, recompile less.`)
+  if (isStylePending) {
+    throw Error('Style is compiling....')
+  }
+  isStylePending = true
+  fs.readFile(styleMainEntryFileName, 'utf-8', async (err, content) => {
+    if (err) return console.error(err)
+    try {
+      const output = await less.render(content, {
+        compress: !dev,
+        paths: ['./styles']
+      })
+      fs.writeFile('./static/styles.css', output.css, (err) => {
+        if (err) console.error(err)
+        isStylePending = false
+      })
+    } catch (e) {
+        isStylePending = false
+      console.log('Error', e)
+    }
   })
 }
 

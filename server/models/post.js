@@ -10,6 +10,9 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
+  cover: String,
+  creatorAvatarUrl: String,
+  summary: String,
   tag: {
     type: Schema.Types.ObjectId,
     ref: 'Tag'

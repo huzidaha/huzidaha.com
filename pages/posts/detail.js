@@ -30,7 +30,7 @@ export default class extends Component {
 
   render () {
     const post = this.props.post
-    const padding = 15
+    const padding = 20
     const borderStyle = '1px solid #EDEDED'
     const dateStyle = { fontStyle: 'none', fontWeight: 'lighter' }
     return (

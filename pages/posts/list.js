@@ -39,6 +39,9 @@ export default class extends Component {
   render () {
     return (
       <Page>
+        <Link>
+          <a href='/posts/create'>新建</a>
+        </Link>
         <ul>
           {this.state.posts.map((post, i) => {
             return (

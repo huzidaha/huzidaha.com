@@ -56,7 +56,7 @@ export default class extends Component {
               </span>
             </a>
           </Link>
-          <Link href='/'>
+          <Link href='/posts/list'>
             <a style={tabItemStyle}>博客</a>
           </Link>
           <Link href='/about'>

@@ -27,7 +27,9 @@ export default class extends Component {
       post: {
         title: '',
         content: '',
-        tag: ''
+        cover: '',
+        tag: '',
+        summary: ''
       }
     }
   }
@@ -84,6 +86,9 @@ export default class extends Component {
     return (
       <Page>
         <div>标题：<input {...dataBinder('post.title')} /></div>
+        <div>封面<input {...dataBinder('post.cover')} /></div>
+        <div>摘要<input {...dataBinder('post.summary')} /></div>
+        <div>创建者头像<input {...dataBinder('post.creatorAvatarUrl')} /></div>
         <div>文章内容：<textarea {...dataBinder('post.content')} /></div>
         <div>文章标签：
           <select {...dataBinder('post.tag')}>
