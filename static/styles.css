@@ -200,7 +200,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 .hljs-strong {
   font-weight: bold;
 }
-/* post content */
+/* 文章内容 markdown 格式 */
 .post-content p,
 .post-content div,
 .post-content code,
@@ -249,4 +249,96 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 }
 .post-content h4 {
   font-size: 1em;
+}
+/* 内容块样式 */
+.main-block {
+  max-width: 700px;
+  width: 95%;
+  margin: 20px auto;
+  border: 1px solid #f0f2f7;
+  background-color: white;
+}
+/* 文章列表项样式 */
+.postSummary {
+  padding: 0 10px;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 1px solid #f0f2f7;
+}
+.postSummary .postSummary__upstairs {
+  display: flex;
+  padding-top: 10px;
+  flex: 1;
+  align-items: center;
+}
+.postSummary .postSummary__upstairs .postCover {
+  display: flex;
+  background-color: #f7f7f7;
+  justify-content: center;
+  align-items: center;
+  height: 110px;
+  color: #CCCCCC;
+  font-size: 12px;
+  border: 0.5em #fff solid;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 1px 4px;
+  width: 180px;
+  background-size: cover;
+  margin: 1px 10px 1px 1px;
+}
+.postSummary .postSummary__upstairs .postTitleAndContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+.postSummary .postSummary__upstairs .postTitleAndContent h1 {
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+.postSummary .postSummary__upstairs .postTitleAndContent p {
+  display: flex;
+  flex: 1;
+  font-size: 13px;
+  line-height: 20px;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postSummary .postSummary__downstairs {
+  display: flex;
+  height: 40px;
+  align-items: center;
+}
+/* Page Header */
+.header {
+  display: flex;
+  alignItems: stretch;
+  background: #1b1920;
+  padding: 0 45px;
+  height: 66px;
+}
+/* post wrapper */
+.post-wrapper {
+  line-height: 1.4rem;
+  font-size: 14px;
+}
+/* 响应式内容 */
+@media (max-width: 414px) {
+  .main-block {
+    width: 100%;
+  }
+  .postCover {
+    display: none!important;
+    width: 0px!important;
+    margin: 0!important;
+    padding: 0!important;
+    border: none!important;
+  }
+}
+@media (max-width: 500px) {
+  .header {
+    padding: 0 5px;
+  }
 }

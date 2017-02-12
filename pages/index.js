@@ -4,6 +4,7 @@ import s from '../common/styles.js'
 import apiClient from '../common/apiClient'
 import Link from 'next/link'
 import Avatar from '../components/avatar'
+import PostDate from '../components/postDate'
 
 export class PostSummary extends Component {
   static propTypes = {
@@ -12,51 +13,21 @@ export class PostSummary extends Component {
 
   render () {
     const { post } = this.props
-    const contentHeight = 112
     return (
-      <div style={{
-        height: '160px',
-        padding: '15px 0',
-        borderBottom: s.seperator
-      }}>
-        <div style={{ display: 'flex', marginBottom: 18 }}>
-          <div style={{
-            display: 'flex',
-            backgroundSize: 'cover',
-            backgroundColor: '#f7f7f7',
-            backgroundImage: `url(${post.cover})`,
-            width: '200px',
-            height: contentHeight,
-            marginRight: '10px',
-            justifyContent: 'center',
-            alignItems: 'center',
-            color: '#CCCCCC',
-            fontSize: '12px',
-            border: '#fff 0.5em solid',
-            boxShadow: 'rgba(0,0,0,0.15) 0 1px 4px',
-            flexShrink: 0
+      <div className='postSummary'>
+        <div className='postSummary__upstairs'>
+          <div className='postCover' style={{
+            backgroundImage: post.cover ? `url(${post.cover})` : 'none'
           }}>{ post.cover ? null : '暂无封面图片' }</div>
-          <div style={{
-            height: contentHeight + 10,
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
-            <h1 style={{ marginBottom: '10px' }}>
-              <a href={`/posts/detail?postId=${post._id}`} target='_blank'>{post.title}</a>
+          <div className='postTitleAndContent'>
+            <h1>
+              <Link href={`/posts/detail?postId=${post._id}`}><a>{post.title}</a></Link>
             </h1>
-            <p style={{
-              fontSize: '13px',
-              lineHeight: '20px',
-              display: 'flex',
-              flex: 1,
-              textOverflow: 'ellipsis'
-            }}>{post.summary}</p>
+            <p>{post.summary ? post.summary.slice(0, 100) + '...' : '暂无内容摘要'}</p>
           </div>
         </div>
-        <div>
-          <Avatar size={20} src={post.creatorAvatarUrl} />
-          <span></span>
+        <div className='postSummary__downstairs'>
+          <PostDate post={post} />
         </div>
       </div>
     )
@@ -77,13 +48,7 @@ export default class extends Component {
   render () {
     return (
       <Page>
-        <div style={{
-          maxWidth: '700px',
-          width: '90%',
-          background: '#FFFFFF',
-          margin: '15px auto',
-          padding: '0 15px'
-        }}>
+        <div className='main-block' style={{ border: s.seperator }}>
           {this.props.posts.map((post) => {
             return <PostSummary key={post._id} post={post} />
           })}

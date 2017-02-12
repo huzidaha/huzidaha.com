@@ -63,13 +63,9 @@ function watchFiles () {
   fs.watch(styleMainEntryFileName, compileLessStyle)
 }
 
-let isStylePending = false
+// TODO: 为什么会被调用两次？
 function compileLessStyle (event, filename) {
   if (filename) console.log(`${filename} ${event}, recompile less.`)
-  if (isStylePending) {
-    throw Error('Style is compiling....')
-  }
-  isStylePending = true
   fs.readFile(styleMainEntryFileName, 'utf-8', async (err, content) => {
     if (err) return console.error(err)
     try {
@@ -79,10 +75,8 @@ function compileLessStyle (event, filename) {
       })
       fs.writeFile('./static/styles.css', output.css, (err) => {
         if (err) console.error(err)
-        isStylePending = false
       })
     } catch (e) {
-        isStylePending = false
       console.log('Error', e)
     }
   })

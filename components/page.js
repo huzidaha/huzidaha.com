@@ -20,13 +20,7 @@ export default class extends Component {
     return (
       <div>
         {/* Header */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'stretch',
-          background: '#1b1920',
-          padding: '0 45px',
-          height: '66px'
-        }}>
+        <div className='header'>
           <Link href='/'>
             <a style={{
               display: 'flex',

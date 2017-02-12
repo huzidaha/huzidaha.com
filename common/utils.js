@@ -28,4 +28,4 @@ export const wrapWithAlertError = (fn) => async (...params) => {
 }
 
 export const makeFormattedDate = _.curry((format, date) => moment(date).format(format))
-export const makeEntityDate = makeFormattedDate('YYYY-MM-DD HH:mm')
+export const makeEntityDate = makeFormattedDate('YY/MM/DD HH:mm')

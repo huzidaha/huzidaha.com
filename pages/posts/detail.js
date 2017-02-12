@@ -8,6 +8,7 @@ import { wrapWithAlertError } from '../../common/utils'
 import moment from 'moment'
 import { makeEntityDate } from '../../common/utils'
 import Avatar from '../../components/avatar'
+import PostDate from '../../components/postDate'
 import hljs from 'highlight.js'
 
 export default class extends Component {
@@ -35,36 +36,12 @@ export default class extends Component {
     const dateStyle = { fontStyle: 'none', fontWeight: 'lighter' }
     return (
       <Page>
-        <div style={{
-          margin: '20px auto',
-          maxWidth: '750px',
-          width: '86%',
-          border: borderStyle,
-          lineHeight: '1.4rem',
-          fontSize: '14px',
-          backgroundColor: '#FFFFFF'
-        }}>
+        <div className='main-block post-wrapper'>
           <div style={{ padding, borderBottom: borderStyle }}>
             <h1 style={{ fontSize: '20px', fontWeight: 'bold' }}>
               {post.title}
             </h1>
-            <div style={{
-              marginTop: '10px',
-              fontSize: '12px',
-              color: '#9D9D9D',
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              <Avatar size={20} src='/static/right.jpeg' />
-              <span style={{ margin: '0 10px' }}>
-                <span>发布于 </span>
-                <span style={dateStyle}>{makeEntityDate(post.createdAt)}</span>
-              </span>
-              <span>
-                <span>更新于 </span>
-                <span style={dateStyle}>{makeEntityDate(post.updatedAt)}</span>
-              </span>
-            </div>
+            <PostDate style={{ marginTop: '15px' }} post={post} />
           </div>
           <div ref='post-content' style={{ padding }} className='post-content' dangerouslySetInnerHTML={{__html: post.markdownContent}} />
         </div>
