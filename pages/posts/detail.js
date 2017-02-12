@@ -36,7 +36,7 @@ export default class extends Component {
     const dateStyle = { fontStyle: 'none', fontWeight: 'lighter' }
     return (
       <Page>
-        <div className='main-block post-wrapper'>
+        <div className='main post-wrapper'>
           <div style={{ padding, borderBottom: borderStyle }}>
             <h1 style={{ fontSize: '20px', fontWeight: 'bold' }}>
               {post.title}

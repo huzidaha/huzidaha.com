@@ -250,11 +250,22 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 .post-content h4 {
   font-size: 1em;
 }
+/* 主体部分布局 */
+.content-wrapper {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.sidebar {
+  width: 250px;
+}
 /* 内容块样式 */
-.main-block {
+.main {
   max-width: 700px;
   width: 95%;
-  margin: 20px auto;
+  margin-right: 5px;
   border: 1px solid #f0f2f7;
   background-color: white;
 }
@@ -324,9 +335,34 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
   line-height: 1.4rem;
   font-size: 14px;
 }
+/* profile */
+.profile {
+  background-color: #ffffff;
+  border: 1px solid #f0f2f7;
+}
+.profile .profile__basic {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #f0f2f7;
+}
+.profile .profile__basic .profile__name {
+  margin: 10px 0;
+}
+.profile .profile__basic .profile__signature {
+  font-size: 13px;
+  color: #9D9D9D;
+  font-style: italic;
+}
+.profile .profile__sns {
+  display: flex;
+  padding: 8px 20px;
+  justify-content: space-around;
+}
 /* 响应式内容 */
 @media (max-width: 414px) {
-  .main-block {
+  .main {
     width: 100%;
   }
   .postCover {

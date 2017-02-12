@@ -1,6 +1,7 @@
 import _ from 'ramda'
 import moment from 'moment'
 import { getPath, setPath } from './fp'
+import { getStore } from './store'
 
 /**
  * ReactJS 双向绑定帮助方法
@@ -29,3 +30,17 @@ export const wrapWithAlertError = (fn) => async (...params) => {
 
 export const makeFormattedDate = _.curry((format, date) => moment(date).format(format))
 export const makeEntityDate = makeFormattedDate('YY/MM/DD HH:mm')
+
+export const asyncObjContruct = async (keysAndPromises) => {
+  const rets = await Promise.all(Object.values(keysAndPromises))
+  return Object.keys(keysAndPromises).reduce((obj, key, index) => {
+    obj[key] = rets[index]
+    return obj
+  }, {})
+}
+
+export const asyncObjContructWithStore = async (keysAndPromises) => {
+  return Object.assign(await asyncObjContruct(keysAndPromises), {
+    store: await getStore()
+  })
+}
