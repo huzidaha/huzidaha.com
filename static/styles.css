@@ -328,13 +328,13 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
   width: 100%;
 }
 .sidebar {
+  margin-left: 5px;
   width: 250px;
 }
 /* 内容块样式 */
 .main {
   max-width: 700px;
   width: 95%;
-  margin-right: 5px;
   border: 1px solid #f0f2f7;
   background-color: white;
 }

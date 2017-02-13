@@ -14,7 +14,7 @@ export default class extends Component {
     const label = (name) => <span>{name}</span>
     return (
       <ReactPaginate
-        initialPage={currentPage - 1}
+        forcePage={currentPage - 1}
         containerClassName='pagination'
         previousLabel={label('前一页')}
         nextLabel={label('后一页')}
