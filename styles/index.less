@@ -125,6 +125,7 @@
   }
   .postSummary__downstairs {
     display: flex;
+    padding-left: 4px;
     height: 40px;
     align-items: center;
   }
@@ -169,6 +170,37 @@
     display: flex;
     padding: 8px 20px;
     justify-content: space-around;
+  }
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 0px 20px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+  li {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    &:not(.break) {
+      a {
+        display: inline-block;
+        border: @seperator;
+        border-radius: 3px;
+        padding: 8px 10px;
+        outline: none;
+      }
+    }
+    &.selected {
+      a {
+        color: #cccccc;
+      }
+    }
   }
 }
 

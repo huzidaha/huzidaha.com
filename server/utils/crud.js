@@ -10,7 +10,8 @@ export default class Crud {
       'read',
       'update',
       'delete',
-      'list'
+      'list',
+      'count'
     ]
   }
 
@@ -77,6 +78,12 @@ export default class Crud {
         .skip(getDefaultFromQuery('offset', 0)(ctx))
         .sort('-_id')
         .limit(getDefaultFromQuery('limit', 10)(ctx))
+    }))
+  }
+
+  count (before, after) {
+    this.router.get('/count', this.wrap(before, after, (ctx) => {
+      return this.Model.find({}).count()
     }))
   }
 }
