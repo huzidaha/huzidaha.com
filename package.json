@@ -58,6 +58,7 @@
     "moment": "^2.17.1",
     "mongoose": "^4.7.6",
     "next": "^2.0.0-beta.18",
+    "nprogress": "^0.2.0",
     "ramda": "^0.23.0",
     "ramda-fantasy": "^0.7.0",
     "react-addons-create-fragment": "^15.4.2",
