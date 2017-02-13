@@ -384,7 +384,8 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
   padding: 8px 10px;
   outline: none;
 }
-.pagination li.selected a {
+.pagination li.selected a,
+.pagination li.disabled a {
   color: #cccccc;
 }
 /* 响应式内容 */
@@ -403,5 +404,10 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 @media (max-width: 500px) {
   .header {
     padding: 0 5px;
+  }
+}
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
   }
 }

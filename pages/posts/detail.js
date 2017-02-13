@@ -1,6 +1,7 @@
 import { Component, PropTypes } from 'react'
 import Link from 'next/link'
 import _ from 'ramda'
+import hljs from 'highlight.js'
 import Page from '../../components/page.js'
 import { twoWayBinding } from '../../common/utils'
 import apiClient from '../../common/apiClient'
@@ -9,13 +10,14 @@ import moment from 'moment'
 import { makeEntityDate } from '../../common/utils'
 import Avatar from '../../components/avatar'
 import PostDate from '../../components/postDate'
-import hljs from 'highlight.js'
+import Profile from '../../components/profile'
+import { asyncObjContructWithStore } from '../../common/utils'
 
 export default class extends Component {
   static async getInitialProps ({ query }) {
-    return {
-      post: await apiClient.get(`/posts/${query.postId}?useMarkdownContent=true`)
-    }
+    return await asyncObjContructWithStore({
+      post: apiClient.get(`/posts/${query.postId}?useMarkdownContent=true`)
+    })
   }
 
   static propTypes = {
@@ -30,20 +32,25 @@ export default class extends Component {
   }
 
   render () {
-    const post = this.props.post
+    const { store: { profile }, post } = this.props
     const padding = 20
     const borderStyle = '1px solid #EDEDED'
     const dateStyle = { fontStyle: 'none', fontWeight: 'lighter' }
     return (
       <Page>
-        <div className='main post-wrapper'>
-          <div style={{ padding, borderBottom: borderStyle }}>
-            <h1 style={{ fontSize: '20px', fontWeight: 'bold' }}>
-              {post.title}
-            </h1>
-            <PostDate style={{ marginTop: '15px' }} post={post} />
+        <div className='content-wrapper'>
+          <div className='main post-wrapper'>
+            <div style={{ padding, borderBottom: borderStyle }}>
+              <h1 style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                {post.title}
+              </h1>
+              <PostDate style={{ marginTop: '15px' }} post={post} />
+            </div>
+            <div ref='post-content' style={{ padding }} className='post-content' dangerouslySetInnerHTML={{__html: post.markdownContent}} />
           </div>
-          <div ref='post-content' style={{ padding }} className='post-content' dangerouslySetInnerHTML={{__html: post.markdownContent}} />
+          <div className='sidebar'>
+            <Profile profile={profile} />
+          </div>
         </div>
       </Page>
     )

@@ -196,7 +196,7 @@
         outline: none;
       }
     }
-    &.selected {
+    &.selected, &.disabled {
       a {
         color: #cccccc;
       }
@@ -221,5 +221,11 @@
 @media (max-width: 500px) {
   .header {
     padding: 0 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
   }
 }

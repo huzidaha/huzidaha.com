@@ -63,7 +63,6 @@ export default class extends Component {
 
   render () {
     const { store: { profile }, postsCount, currentPage } = this.props
-    console.log(ITEMS_PER_PAGE)
     return (
       <Page>
         <div className='content-wrapper'>
