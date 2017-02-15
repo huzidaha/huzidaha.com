@@ -39,8 +39,8 @@ export const asyncObjContruct = async (keysAndPromises) => {
   }, {})
 }
 
-export const asyncObjContructWithStore = async (keysAndPromises) => {
+export const asyncObjContructWithStore = async (keysAndPromises, apiClient) => {
   return Object.assign(await asyncObjContruct(keysAndPromises), {
-    store: await getStore()
+    store: await getStore(apiClient)
   })
 }

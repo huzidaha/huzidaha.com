@@ -1,4 +1,5 @@
 import _ from 'ramda'
+import { Component } from 'react'
 import fetch from 'isomorphic-fetch'
 import { BACKEND_URL } from '../config'
 
@@ -22,12 +23,15 @@ const makeGetUrl = (path, params) => {
 }
 
 export class ApiClient {
-  constructor () {
+  constructor (req) {
     methods.forEach((method) => {
       this[method] = _.curryN(method === 'get' || method === 'delete' ? 1 : 2, async (path, params) => {
         const headers = {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
+        }
+        if (req) {
+          headers['Cookie'] = req.headers.cookie
         }
         try {
           let uri
@@ -39,6 +43,7 @@ export class ApiClient {
           const res = await fetch(uri, {
             method,
             headers,
+            credentials: 'same-origin',
             body: method === 'get' ? null : JSON.stringify(params)
           })
           if (res.status === 200 || res.status === 201) {
@@ -68,4 +73,15 @@ export class ApiClient {
   }
 }
 
-export default new ApiClient()
+export const connectApiClient = (PageComponent) => {
+  return class extends Component {
+    static async getInitialProps (ctx) {
+      ctx.apiClient = new ApiClient(ctx.req)
+      return await PageComponent.getInitialProps(ctx)
+    }
+
+    render () {
+      return <PageComponent {...this.props} />
+    }
+  }
+}

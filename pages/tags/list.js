@@ -2,11 +2,11 @@ import { Component, PropTypes } from 'react'
 import { twoWayBinding, wrapWithAlertError } from '../../common/utils'
 import { alwaysAlert } from '../../common/fp'
 import Page from '../../components/page.js'
-import apiClient from '../../common/apiClient.js'
+import { connectApiClient } from '../../common/apiClient.js'
 import s from '../../common/styles.js'
 import _ from 'ramda'
 
-export default class extends Component {
+class TagsList extends Component {
   static async getInitialProps (ctx) {
     return {
       tags: await apiClient.get('/tags?offset=0&limit=1000')
@@ -74,3 +74,5 @@ export default class extends Component {
     )
   }
 }
+
+export default connectApiClient(TagsList)

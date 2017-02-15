@@ -1,4 +1,6 @@
 import Router from 'koa-router'
+import jwt from 'jsonwebtoken'
+import { JWT_SECRECT_KEY } from '../../secrect'
 
 export default class CustomRouter extends Router {
   constructor () {
@@ -14,6 +16,7 @@ export default class CustomRouter extends Router {
   wrap (fn) {
     return async (ctx) => {
       try {
+        await verifyJWT(ctx)
         const ret = await fn(ctx)
         ctx.status = 200
         ctx.body = {
@@ -21,6 +24,7 @@ export default class CustomRouter extends Router {
           data: ret
         }
       } catch (e) {
+        console.log('ERROR: ', e)
         if (e.name === 'ValidationError') {
           ctx.status = 400
           ctx.body = {
@@ -38,4 +42,33 @@ export default class CustomRouter extends Router {
       }
     }
   }
+}
+
+const verifyJWT = (ctx) => {
+  const token = ctx.cookies.get('token')
+  return new Promise((resolve, reject) => {
+    if (!token) {
+      ctx.state.session = null
+      return resolve(null)
+    }
+    jwt.verify(token, JWT_SECRECT_KEY, (err, sessionData) => {
+      if (err) {
+        ctx.state.session = null
+        reject(err)
+      } else {
+        ctx.state.session = sessionData
+        resolve(sessionData)
+      }
+    })
+  })
+}
+
+const signJWT = (ctx, data) => {
+  return new Promise((resolve, reject) => {
+    jwt.sign(data, JWT_SECRECT_KEY, { expiresIn: '14 days' }, (err, token) => {
+      if (err) return reject(err)
+      ctx.cookies.set('token', token)
+      resolve(token)
+    })
+  })
 }

@@ -2,12 +2,12 @@ import { Component, PropTypes } from 'react'
 import Link from 'next/link'
 import _ from 'ramda'
 import Page from '../../components/page.js'
-import apiClient from '../../common/apiClient'
+import { connectApiClient } from '../../common/apiClient'
 import { wrapWithAlertError, twoWayBinding } from '../../common/utils'
 import { Either } from 'ramda-fantasy'
 
-export default class extends Component {
-  static async getInitialProps ({ query }) {
+class CreatePosts extends Component {
+  static async getInitialProps ({ query, apiClient }) {
     return {
       tags: await apiClient.get('/tags?offset=0&limit=100000'),
       post: query.postId
@@ -110,3 +110,5 @@ export default class extends Component {
     )
   }
 }
+
+export default connectApiClient(CreatePosts)

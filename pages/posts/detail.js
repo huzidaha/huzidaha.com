@@ -4,7 +4,7 @@ import _ from 'ramda'
 import hljs from 'highlight.js'
 import Page from '../../components/page.js'
 import { twoWayBinding } from '../../common/utils'
-import apiClient from '../../common/apiClient'
+import { connectApiClient } from '../../common/apiClient'
 import { wrapWithAlertError } from '../../common/utils'
 import moment from 'moment'
 import { makeEntityDate } from '../../common/utils'
@@ -13,11 +13,11 @@ import PostDate from '../../components/postDate'
 import Profile from '../../components/profile'
 import { asyncObjContructWithStore } from '../../common/utils'
 
-export default class extends Component {
-  static async getInitialProps ({ query }) {
+class PostDetail extends Component {
+  static async getInitialProps ({ query, apiClient }) {
     return await asyncObjContructWithStore({
       post: apiClient.get(`/posts/${query.postId}?useMarkdownContent=true`)
-    })
+    }, apiClient)
   }
 
   static propTypes = {
@@ -56,3 +56,5 @@ export default class extends Component {
     )
   }
 }
+
+export default connectApiClient(PostDetail)

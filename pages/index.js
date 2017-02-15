@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react'
 import Link from 'next/link'
 import Page from '../components/page.js'
-import apiClient from '../common/apiClient'
+import { connectApiClient } from '../common/apiClient'
 import Avatar from '../components/avatar'
 import Profile from '../components/profile'
 import PostDate from '../components/postDate'
@@ -38,14 +38,14 @@ export class PostSummary extends Component {
   }
 }
 
-export default class extends Component {
-  static async getInitialProps ({ query }) {
+class Index extends Component {
+  static async getInitialProps ({ query, apiClient }) {
     const currentPage = query.page * 1 > 0 ? query.page * 1 : 1
     return await asyncObjContructWithStore({
       posts: apiClient.get(`/posts?offset=${(currentPage - 1) * ITEMS_PER_PAGE}&limit=${ITEMS_PER_PAGE}`),
       postsCount: apiClient.get('/posts/count'),
       currentPage
-    })
+    }, apiClient)
   }
 
   static propTypes = {
@@ -84,3 +84,5 @@ export default class extends Component {
     )
   }
 }
+
+export default connectApiClient(Index)

@@ -1,11 +1,11 @@
 import { Component, PropTypes } from 'react'
 import _ from 'ramda'
 import Link from 'next/link'
-import apiClient from '../../common/apiClient'
+import { connectApiClient } from '../../common/apiClient'
 import Page from '../../components/page.js'
 import { wrapWithAlertError, makeEntityDate } from '../../common/utils'
 
-export default class extends Component {
+class PostsList extends Component {
   static async getInitialProps () {
     return {
       posts: await apiClient.get('/posts')
@@ -68,3 +68,5 @@ export default class extends Component {
     )
   }
 }
+
+export default connectApiClient(PostsList)
