@@ -6,7 +6,7 @@ import Page from '../../components/page.js'
 import { wrapWithAlertError, makeEntityDate } from '../../common/utils'
 
 class PostsList extends Component {
-  static async getInitialProps () {
+  static async getInitialProps ({ apiClient }) {
     return {
       posts: await apiClient.get('/posts')
     }
