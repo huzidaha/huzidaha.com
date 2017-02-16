@@ -2,12 +2,10 @@ import { Component, PropTypes } from 'react'
 import Link from 'next/link'
 import Page from '../components/page.js'
 import { connectApiClient } from '../common/apiClient'
-import Avatar from '../components/avatar'
 import Profile from '../components/profile'
 import PostDate from '../components/postDate'
 import Pagination from '../components/pagination'
 import { asyncObjContructWithStore } from '../common/utils'
-import { getStore } from '../common/store'
 import { ITEMS_PER_PAGE } from '../common/constants'
 
 export class PostSummary extends Component {
@@ -53,7 +51,8 @@ class Index extends Component {
     profile: PropTypes.object,
     currentPage: PropTypes.number,
     postsCount: PropTypes.number,
-    store: PropTypes.object
+    store: PropTypes.object,
+    url: PropTypes.object
   }
 
   handlePageChanged (obj) {
@@ -74,7 +73,7 @@ class Index extends Component {
               totalItems={postsCount}
               itemsPerPage={ITEMS_PER_PAGE}
               currentPage={currentPage}
-              onPageChange={this.handlePageChanged.bind(this)}/>
+              onPageChange={this.handlePageChanged.bind(this)} />
           </div>
           <div className='sidebar'>
             <Profile profile={profile} />

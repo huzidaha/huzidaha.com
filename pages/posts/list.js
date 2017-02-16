@@ -8,6 +8,7 @@ import { wrapWithAlertError, makeEntityDate } from '../../common/utils'
 class PostsList extends Component {
   static async getInitialProps ({ apiClient }) {
     return {
+      apiClient,
       posts: await apiClient.get('/posts')
     }
   }
@@ -24,6 +25,7 @@ class PostsList extends Component {
 
   handleDeletePost = wrapWithAlertError((post, index) => {
     const deletePost = async (post) => {
+      const { apiClient } = this.props
       await apiClient.delete(`/posts/${post._id}`)
       this.setState({ posts: _.remove(index, 1, this.state.posts) })
     }

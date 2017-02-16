@@ -1,14 +1,7 @@
 import { Component, PropTypes } from 'react'
-import Link from 'next/link'
-import _ from 'ramda'
 import hljs from 'highlight.js'
 import Page from '../../components/page.js'
-import { twoWayBinding } from '../../common/utils'
 import { connectApiClient } from '../../common/apiClient'
-import { wrapWithAlertError } from '../../common/utils'
-import moment from 'moment'
-import { makeEntityDate } from '../../common/utils'
-import Avatar from '../../components/avatar'
 import PostDate from '../../components/postDate'
 import Profile from '../../components/profile'
 import { asyncObjContructWithStore } from '../../common/utils'
@@ -21,6 +14,7 @@ class PostDetail extends Component {
   }
 
   static propTypes = {
+    store: PropTypes.object,
     post: PropTypes.object
   }
 
@@ -35,7 +29,6 @@ class PostDetail extends Component {
     const { store: { profile }, post } = this.props
     const padding = 20
     const borderStyle = '1px solid #EDEDED'
-    const dateStyle = { fontStyle: 'none', fontWeight: 'lighter' }
     return (
       <Page>
         <div className='content-wrapper'>

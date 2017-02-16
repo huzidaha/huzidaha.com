@@ -10,7 +10,7 @@ export default class extends Component {
   }
 
   render () {
-    const {totalItems, itemsPerPage, currentPage, onPageChange } = this.props
+    const { totalItems, itemsPerPage, currentPage, onPageChange } = this.props
     const label = (name) => <span>{name}</span>
     return (
       <ReactPaginate

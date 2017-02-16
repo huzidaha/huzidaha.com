@@ -1,5 +1,4 @@
 import Document, { Head, Main, NextScript } from 'next/document'
-import { PropTypes } from 'react'
 
 export default class MyDocument extends Document {
   render () {
@@ -12,7 +11,7 @@ export default class MyDocument extends Document {
           <meta name='renderer' content='webkit' />
           <meta httpEquiv='Cache-Control' content='no-siteapp' />
           <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
-          <link rel="stylesheet" href="/static/styles.css" />
+          <link rel='stylesheet' href='/static/styles.css' />
         </Head>
         <body style={{ backgroundColor: '#f7fafc' }}>
           <Main />

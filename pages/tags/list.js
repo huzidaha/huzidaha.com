@@ -3,18 +3,19 @@ import { twoWayBinding, wrapWithAlertError } from '../../common/utils'
 import { alwaysAlert } from '../../common/fp'
 import Page from '../../components/page.js'
 import { connectApiClient } from '../../common/apiClient.js'
-import s from '../../common/styles.js'
 import _ from 'ramda'
 
 class TagsList extends Component {
-  static async getInitialProps (ctx) {
+  static async getInitialProps ({ apiClient }) {
     return {
+      apiClient,
       tags: await apiClient.get('/tags?offset=0&limit=1000')
     }
   }
 
   static propTypes = {
-    tags: PropTypes.array
+    tags: PropTypes.array,
+    apiClient: PropTypes.object
   }
 
   constructor () {
@@ -31,6 +32,7 @@ class TagsList extends Component {
   }
 
   sendToServerAndRenderThenClear = wrapWithAlertError(async (name) => {
+    const { apiClient } = this.props
     const tag = await apiClient.post('/tags', { name })
     this.setState({
       tags: _.insert(0, tag, this.state.tags),
@@ -48,6 +50,7 @@ class TagsList extends Component {
   )
 
   deleteItem = wrapWithAlertError(async (tag, index) => {
+    const { apiClient } = this.props
     await apiClient.delete(`/tags/${tag._id}`)
     this.setState({
       tags: _.remove(index, 1, this.state.tags)
