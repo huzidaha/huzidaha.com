@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
+import huzidahaProfile from './huzidahaProfile'
 
 export default combineReducers({
-  fuckyou: (state = { name: 'jerry' }, action) => {
-    return {...state}
-  }
+  huzidahaProfile
 })

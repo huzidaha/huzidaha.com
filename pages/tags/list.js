@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react'
 import Page from '../../components/Page'
 import { twoWayBinding, wrapWithAlertError } from '../../common/utils'
-import apiClient, { connectApiClient } from '../../common/apiClient.js'
+import { connectApiClient } from '../../common/apiClient.js'
 import _ from 'ramda'
 
 class TagsList extends Component {
@@ -12,7 +12,8 @@ class TagsList extends Component {
   }
 
   static propTypes = {
-    tags: PropTypes.array
+    tags: PropTypes.array,
+    apiClient: PropTypes.object
   }
 
   constructor () {
@@ -29,6 +30,7 @@ class TagsList extends Component {
   }
 
   sendToServerAndRenderThenClear = wrapWithAlertError(async (name) => {
+    const { apiClient } = this.props
     const tag = await apiClient.post('/tags', { name })
     this.setState({
       tags: _.insert(0, tag, this.state.tags),

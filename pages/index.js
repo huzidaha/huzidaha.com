@@ -4,10 +4,8 @@ import Page from '../components/Page'
 import Profile from '../components/Profile'
 import PostDate from '../components/PostDate'
 import Pagination from '../components/Pagination'
-import { connectApiClient } from '../common/apiClient'
-import { asyncObjContruct } from '../common/utils'
+import { asyncObjContruct, connectAll } from '../common/utils'
 import { ITEMS_PER_PAGE } from '../common/constants'
-import { wrapWithProvider } from '../stores'
 
 export class PostSummary extends Component {
   static propTypes = {
@@ -56,7 +54,7 @@ class Index extends Component {
     profile: PropTypes.object,
     currentPage: PropTypes.number,
     postsCount: PropTypes.number,
-    store: PropTypes.object,
+    huzidahaProfile: PropTypes.object,
     url: PropTypes.object
   }
 
@@ -66,7 +64,7 @@ class Index extends Component {
   }
 
   render () {
-    const { store: { profile }, postsCount, currentPage } = this.props
+    const { huzidahaProfile, postsCount, currentPage } = this.props
     return (
       <Page>
         <div className='content-wrapper'>
@@ -81,7 +79,7 @@ class Index extends Component {
               onPageChange={this.handlePageChanged.bind(this)} />
           </div>
           <div className='sidebar'>
-            <Profile profile={profile} />
+            <Profile profile={huzidahaProfile} />
           </div>
         </div>
       </Page>
@@ -89,7 +87,8 @@ class Index extends Component {
   }
 }
 
-Index = connectApiClient(Index)
-Index = wrapWithProvider(Index)
+Index = connectAll((state) => ({
+  huzidahaProfile: state.huzidahaProfile.profile
+}))(Index)
 
 export default Index

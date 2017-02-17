@@ -2,8 +2,7 @@ import { Component, PropTypes } from 'react'
 import Link from 'next/link'
 import _ from 'ramda'
 import Page from '../../components/Page'
-import apiClient, { connectApiClient } from '../../common/apiClient'
-import { wrapWithAlertError, twoWayBinding } from '../../common/utils'
+import { wrapWithAlertError, twoWayBinding, connectAll } from '../../common/utils'
 import { Either } from 'ramda-fantasy'
 
 class CreatePosts extends Component {
@@ -18,7 +17,8 @@ class CreatePosts extends Component {
 
   static propTypes = {
     tags: PropTypes.array,
-    post: PropTypes.object
+    post: PropTypes.object,
+    apiClient: PropTypes.object
   }
 
   constructor () {
@@ -70,6 +70,7 @@ class CreatePosts extends Component {
   }
 
   sendPost = wrapWithAlertError(async (post) => {
+    const { apiClient } = this.props
     if (this._isUpdate) {
       await apiClient.put(`/posts/${post._id}`, post)
     } else {
@@ -111,4 +112,4 @@ class CreatePosts extends Component {
   }
 }
 
-export default connectApiClient(CreatePosts)
+export default connectAll(null, null)(CreatePosts)

@@ -1,7 +1,9 @@
 /* eslint-disable no-new-func */
+import { connect } from 'react-redux'
+import { connectApiClient } from './apiClient'
+import { wrapWithProvider } from '../stores'
 import _ from 'ramda'
 import moment from 'moment'
-import { getStore } from './store'
 
 const updatedPath = (path) => {
   return path[0] === '[' ? path : `.${path}`
@@ -46,11 +48,11 @@ export const asyncObjContruct = async (keysAndPromises) => {
   }, {})
 }
 
-export const asyncObjContructWithStore = async (keysAndPromises, apiClient) => {
-  return Object.assign(await asyncObjContruct(keysAndPromises), {
-    store: await getStore(apiClient)
-  })
-}
+export const connectAll = (mapStateToProps, mapDispatchToProps) => _.compose(
+  connectApiClient,
+  wrapWithProvider,
+  connect(mapStateToProps, mapDispatchToProps)
+)
 
 export const makeFormattedDate = _.curry((format, date) => moment(date).format(format))
 export const showError = (err) => { alert(err) }

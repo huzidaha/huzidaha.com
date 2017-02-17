@@ -1,5 +1,5 @@
 import _ from 'ramda'
-import { Component } from 'react'
+import { Component, PropTypes } from 'react'
 import fetch from 'isomorphic-fetch'
 import { BACKEND_URL } from '../config'
 
@@ -73,17 +73,47 @@ export class ApiClient {
   }
 }
 
+let apiClient = null
+
+const isApiClient = (apiClient) => {
+  return apiClient.get && apiClient.post && apiClient.delete && apiClient.put && apiClient.patch
+}
+
 export const connectApiClient = (PageComponent) => {
   return class extends Component {
+    static propTypes = {
+      apiClient: PropTypes.object
+    }
+
     static async getInitialProps (ctx) {
-      ctx.apiClient = new ApiClient(ctx.req)
-      return PageComponent.getInitialProps
+      const { req } = ctx
+      const isServer = !!req
+      if (isServer) {
+        ctx.apiClient = new ApiClient(req)
+      } else {
+        if (!apiClient) {
+          apiClient = new ApiClient()
+        }
+        ctx.apiClient = apiClient
+      }
+      const props = PageComponent.getInitialProps
         ? await PageComponent.getInitialProps(ctx)
         : {}
+      props.apiClient = ctx.apiClient
+      return props
+    }
+
+    constructor (props) {
+      super(props)
+      if (!apiClient) {
+        apiClient = new ApiClient()
+      }
     }
 
     render () {
-      return <PageComponent {...this.props} />
+      return !isApiClient(this.props.apiClient)
+        ? <PageComponent {...this.props} apiClient={apiClient} />
+        : <PageComponent {...this.props} />
     }
   }
 }

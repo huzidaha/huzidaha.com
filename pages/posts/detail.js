@@ -3,19 +3,18 @@ import hljs from 'highlight.js'
 import Page from '../../components/Page'
 import PostDate from '../../components/PostDate'
 import Profile from '../../components/Profile'
-import { connectApiClient } from '../../common/apiClient'
-import { asyncObjContructWithStore } from '../../common/utils'
+import { connectAll, asyncObjContruct } from '../../common/utils'
 
 class PostDetail extends Component {
-  static async getInitialProps ({ query, apiClient }) {
-    return await asyncObjContructWithStore({
-      post: apiClient.get(`/posts/${query.postId}?useMarkdownContent=true`)
-    }, apiClient)
+  static propTypes = {
+    huzidahaProfile: PropTypes.object,
+    post: PropTypes.object
   }
 
-  static propTypes = {
-    store: PropTypes.object,
-    post: PropTypes.object
+  static async getInitialProps ({ query, apiClient }) {
+    return await asyncObjContruct({
+      post: apiClient.get(`/posts/${query.postId}?useMarkdownContent=true`)
+    }, apiClient)
   }
 
   componentDidMount () {
@@ -26,7 +25,7 @@ class PostDetail extends Component {
   }
 
   render () {
-    const { store: { profile }, post } = this.props
+    const { huzidahaProfile, post } = this.props
     const padding = 20
     const borderStyle = '1px solid #EDEDED'
     return (
@@ -42,7 +41,7 @@ class PostDetail extends Component {
             <div ref='post-content' style={{ padding }} className='post-content' dangerouslySetInnerHTML={{__html: post.markdownContent}} />
           </div>
           <div className='sidebar'>
-            <Profile profile={profile} />
+            <Profile profile={huzidahaProfile} />
           </div>
         </div>
       </Page>
@@ -50,4 +49,6 @@ class PostDetail extends Component {
   }
 }
 
-export default connectApiClient(PostDetail)
+export default connectAll((state) => ({
+  huzidahaProfile: state.huzidahaProfile.profile
+}))(PostDetail)
