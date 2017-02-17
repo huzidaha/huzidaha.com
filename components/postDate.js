@@ -1,5 +1,5 @@
 import { Component, PropTypes } from 'react'
-import Avatar from './avatar'
+import Avatar from './Avatar'
 import { makeEntityDate } from '../common/utils'
 
 export default class extends Component {

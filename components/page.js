@@ -1,5 +1,5 @@
 import { Component, PropTypes } from 'react'
-import s from '../common/styles.js'
+import { fadePrimaryColor } from '../common/styles.js'
 import Link from 'next/link'
 import NProgress from 'nprogress'
 import Router from 'next/router'
@@ -14,59 +14,63 @@ export default class extends Component {
   }
 
   render () {
-    const tabItemStyle = {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: 'rgba(255,255,255,0.6)',
-      fontSize: '14px',
-      flex: '0 0 50px'
-    }
-
     return (
       <div>
         {/* Header */}
         <div className='header'>
           <Link href='/'>
-            <a style={{
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              <img src='/static/logo.png' style={{
-                width: '40px',
-                height: '40px',
-                marginBottom: '3px'
-              }} />
-              <span style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: s.primaryColor(0.6),
-                width: '32px',
-                height: '32px',
-                borderRadius: '4px',
-                fontSize: '12px',
-                color: '#ffffff',
-                marginLeft: '10px',
-                marginRight: '20px'
-              }}>
+            <a className='home'>
+              <img src='/static/logo.png' className='logo' />
+              <span className='stamp'>
                 <span>胡子</span>
                 <span>大哈</span>
               </span>
             </a>
           </Link>
-          {/*<Link href='/posts/list'>
-            <a style={tabItemStyle}>博客</a>
-          </Link>*/}
           <Link href='/about'>
-            <a style={tabItemStyle}>关于我</a>
+            <a className='tab-item'>关于我</a>
           </Link>
           <Link href='/courses'>
-            <a style={tabItemStyle}>课程</a>
+            <a className='tab-item'>课程</a>
+          </Link>
+          <Link href='/users/signup'>
+            <a className='tab-item'>登录/注册</a>
           </Link>
         </div>
         {this.props.children}
+        <style jsx>{`
+          .home {
+            display: flex;
+            align-items: center;
+          }
+          .stamp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: ${fadePrimaryColor};
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #ffffff;
+            margin-left: 10px;
+            margin-right: 20px;
+          }
+          .logo {
+            width: 40px;
+            height: 40px;
+            marginBottom: 3px;
+          }
+          .tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            flex: 0 0 50px;
+          }
+        `}</style>
       </div>
     )
   }

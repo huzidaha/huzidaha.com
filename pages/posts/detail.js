@@ -1,9 +1,9 @@
 import { Component, PropTypes } from 'react'
 import hljs from 'highlight.js'
-import Page from '../../components/page.js'
+import Page from '../../components/Page'
+import PostDate from '../../components/PostDate'
+import Profile from '../../components/Profile'
 import { connectApiClient } from '../../common/apiClient'
-import PostDate from '../../components/postDate'
-import Profile from '../../components/profile'
 import { asyncObjContructWithStore } from '../../common/utils'
 
 class PostDetail extends Component {

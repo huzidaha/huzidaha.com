@@ -1,15 +1,14 @@
 import { Component, PropTypes } from 'react'
 import Link from 'next/link'
 import _ from 'ramda'
-import Page from '../../components/page.js'
-import { connectApiClient } from '../../common/apiClient'
+import Page from '../../components/Page'
+import apiClient, { connectApiClient } from '../../common/apiClient'
 import { wrapWithAlertError, twoWayBinding } from '../../common/utils'
 import { Either } from 'ramda-fantasy'
 
 class CreatePosts extends Component {
   static async getInitialProps ({ query, apiClient }) {
     return {
-      apiClient,
       tags: await apiClient.get('/tags?offset=0&limit=100000'),
       post: query.postId
         ? await apiClient.get(`/posts/${query.postId}`)
@@ -18,7 +17,6 @@ class CreatePosts extends Component {
   }
 
   static propTypes = {
-    apiClient: PropTypes.object,
     tags: PropTypes.array,
     post: PropTypes.object
   }
@@ -72,7 +70,6 @@ class CreatePosts extends Component {
   }
 
   sendPost = wrapWithAlertError(async (post) => {
-    const { apiClient } = this.props
     if (this._isUpdate) {
       await apiClient.put(`/posts/${post._id}`, post)
     } else {

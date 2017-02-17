@@ -3,7 +3,7 @@ import isEmail from 'validator/lib/isEmail'
 import { Schema } from 'mongoose'
 
 const userSchema = new Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -25,9 +25,15 @@ const userSchema = new Schema({
       }
     }
   },
+  password: {
+    type: String,
+    required: true,
+    minilength: 6,
+    maxlength: 30
+  },
   isVerified: Boolean
 })
 
-const User= mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
 
 export default User

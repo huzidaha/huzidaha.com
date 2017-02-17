@@ -60,7 +60,7 @@ function watchFiles () {
     backendApiCallback = getBackendApiCallback()
     console.log(`${filename} ${event}, restarting routes.`)
   })
-  fs.watch(styleMainEntryFileName, compileLessStyle)
+  fs.watch('./styles/', { recursive: true }, compileLessStyle)
 }
 
 // TODO: 为什么会被调用两次？

@@ -1,21 +1,18 @@
 import { Component, PropTypes } from 'react'
+import Page from '../../components/Page'
 import { twoWayBinding, wrapWithAlertError } from '../../common/utils'
-import { alwaysAlert } from '../../common/fp'
-import Page from '../../components/page.js'
-import { connectApiClient } from '../../common/apiClient.js'
+import apiClient, { connectApiClient } from '../../common/apiClient.js'
 import _ from 'ramda'
 
 class TagsList extends Component {
   static async getInitialProps ({ apiClient }) {
     return {
-      apiClient,
       tags: await apiClient.get('/tags?offset=0&limit=1000')
     }
   }
 
   static propTypes = {
-    tags: PropTypes.array,
-    apiClient: PropTypes.object
+    tags: PropTypes.array
   }
 
   constructor () {
@@ -32,7 +29,6 @@ class TagsList extends Component {
   }
 
   sendToServerAndRenderThenClear = wrapWithAlertError(async (name) => {
-    const { apiClient } = this.props
     const tag = await apiClient.post('/tags', { name })
     this.setState({
       tags: _.insert(0, tag, this.state.tags),
@@ -44,7 +40,7 @@ class TagsList extends Component {
     _.path(['newTag', 'name']),
     _.ifElse(
       _.anyPass([_.isEmpty, _.isNil]),
-      alwaysAlert('不能输入为空的标签'),
+      (words) => alert('不能输入为空的标签'),
       this.sendToServerAndRenderThenClear
     )
   )

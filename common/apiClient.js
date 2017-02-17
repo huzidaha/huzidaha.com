@@ -77,7 +77,9 @@ export const connectApiClient = (PageComponent) => {
   return class extends Component {
     static async getInitialProps (ctx) {
       ctx.apiClient = new ApiClient(ctx.req)
-      return await PageComponent.getInitialProps(ctx)
+      return PageComponent.getInitialProps
+        ? await PageComponent.getInitialProps(ctx)
+        : {}
     }
 
     render () {
@@ -85,3 +87,5 @@ export const connectApiClient = (PageComponent) => {
     }
   }
 }
+
+export default new ApiClient()

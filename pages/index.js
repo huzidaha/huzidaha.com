@@ -1,12 +1,13 @@
 import { Component, PropTypes } from 'react'
 import Link from 'next/link'
-import Page from '../components/page.js'
+import Page from '../components/Page'
+import Profile from '../components/Profile'
+import PostDate from '../components/PostDate'
+import Pagination from '../components/Pagination'
 import { connectApiClient } from '../common/apiClient'
-import Profile from '../components/profile'
-import PostDate from '../components/postDate'
-import Pagination from '../components/pagination'
-import { asyncObjContructWithStore } from '../common/utils'
+import { asyncObjContruct } from '../common/utils'
 import { ITEMS_PER_PAGE } from '../common/constants'
+import { wrapWithProvider } from '../stores'
 
 export class PostSummary extends Component {
   static propTypes = {
@@ -39,11 +40,15 @@ export class PostSummary extends Component {
 class Index extends Component {
   static async getInitialProps ({ query, apiClient }) {
     const currentPage = query.page * 1 > 0 ? query.page * 1 : 1
-    return await asyncObjContructWithStore({
+    return await asyncObjContruct({
       posts: apiClient.get(`/posts?offset=${(currentPage - 1) * ITEMS_PER_PAGE}&limit=${ITEMS_PER_PAGE}`),
       postsCount: apiClient.get('/posts/count'),
       currentPage
-    }, apiClient)
+    })
+  }
+
+  static contextTypes = {
+    store: PropTypes.object
   }
 
   static propTypes = {
@@ -84,4 +89,7 @@ class Index extends Component {
   }
 }
 
-export default connectApiClient(Index)
+Index = connectApiClient(Index)
+Index = wrapWithProvider(Index)
+
+export default Index

@@ -1,7 +1,19 @@
+/* eslint-disable no-new-func */
 import _ from 'ramda'
 import moment from 'moment'
-import { getPath, setPath } from './fp'
 import { getStore } from './store'
+
+const updatedPath = (path) => {
+  return path[0] === '[' ? path : `.${path}`
+}
+
+const getPath = _.curry((obj, path) => {
+  return (new Function('obj', `return obj${updatedPath(path)}`))(obj)
+})
+
+const setPath = _.curry((obj, path, value) => {
+  return (new Function('obj', 'value', `return obj${updatedPath(path)} = value`))(obj, value)
+})
 
 /**
  * ReactJS 双向绑定帮助方法
@@ -18,18 +30,13 @@ export const twoWayBinding = _.curry((component, path) => {
   }
 })
 
-export const showError = (err) => { alert(err) }
-
 export const wrapWithAlertError = (fn) => async (...params) => {
   try {
-    await fn(..._.clone(params)) // 谁知道你在写什么
+    await fn(..._.clone(params))
   } catch (e) {
     alert(`错误：${e}`)
   }
 }
-
-export const makeFormattedDate = _.curry((format, date) => moment(date).format(format))
-export const makeEntityDate = makeFormattedDate('YY/MM/DD HH:mm')
 
 export const asyncObjContruct = async (keysAndPromises) => {
   const rets = await Promise.all(Object.values(keysAndPromises))
@@ -44,3 +51,7 @@ export const asyncObjContructWithStore = async (keysAndPromises, apiClient) => {
     store: await getStore(apiClient)
   })
 }
+
+export const makeFormattedDate = _.curry((format, date) => moment(date).format(format))
+export const showError = (err) => { alert(err) }
+export const makeEntityDate = makeFormattedDate('YY/MM/DD HH:mm')

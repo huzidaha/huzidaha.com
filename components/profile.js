@@ -1,6 +1,6 @@
 import { PropTypes, Component } from 'react'
-import Avatar from './avatar'
-import Icon from './icon'
+import Avatar from './Avatar'
+import Icon from './Icon'
 
 export default class Profile extends Component {
   static propTypes = {

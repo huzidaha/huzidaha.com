@@ -1,19 +1,21 @@
 import { Component, PropTypes } from 'react'
 import _ from 'ramda'
 import Link from 'next/link'
-import { connectApiClient } from '../../common/apiClient'
-import Page from '../../components/page.js'
+import { connect } from 'react-redux'
+import Page from '../../components/Page'
+import apiClient, { connectApiClient } from '../../common/apiClient'
 import { wrapWithAlertError, makeEntityDate } from '../../common/utils'
+import { wrapWithProvider } from '../../stores'
 
 class PostsList extends Component {
   static async getInitialProps ({ apiClient }) {
     return {
-      apiClient,
       posts: await apiClient.get('/posts')
     }
   }
 
   static propTypes = {
+    fuckyou: PropTypes.object,
     posts: PropTypes.array
   }
 
@@ -25,7 +27,6 @@ class PostsList extends Component {
 
   handleDeletePost = wrapWithAlertError((post, index) => {
     const deletePost = async (post) => {
-      const { apiClient } = this.props
       await apiClient.delete(`/posts/${post._id}`)
       this.setState({ posts: _.remove(index, 1, this.state.posts) })
     }
@@ -71,4 +72,8 @@ class PostsList extends Component {
   }
 }
 
-export default connectApiClient(PostsList)
+PostsList = connectApiClient(PostsList)
+PostsList = connect((state) => ({}))(PostsList)
+PostsList = wrapWithProvider(PostsList)
+
+export default PostsList
