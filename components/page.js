@@ -1,4 +1,5 @@
 import { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { fadePrimaryColor } from '../common/styles.js'
 import Link from 'next/link'
 import NProgress from 'nprogress'
@@ -8,7 +9,57 @@ Router.onRouteChangeStart = (url) => NProgress.start()
 Router.onRouteChangeComplete = () => NProgress.done()
 Router.onRouteChangeError = () => NProgress.done()
 
-export default class extends Component {
+class MenuItem extends Component {
+  static propTypes = {
+    children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]),
+    href: PropTypes.string
+  }
+
+  render () {
+    return (
+      <div className='tab-item'>
+        <Link href={this.props.href}>
+          <a>{this.props.children}</a>
+        </Link>
+        <style>{`
+          .tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            white-space: nowrap;
+            flex: 0 0 50px;
+          }
+          a {
+            cursor: pointer;
+            color: rgba(255,255,255,0.6);
+          }
+          a:hover {
+            color: rgba(255,255,255,0.6);
+          }
+        `}</style>
+      </div>
+    )
+  }
+}
+
+class UserInfo extends Component {
+  static propTypes = {
+    myProfile: PropTypes.object
+  }
+
+  render () {
+    return (
+      <MenuItem href='/users/signup'>登录 | 注册</MenuItem>
+    )
+  }
+}
+
+UserInfo = connect((state) => ({
+  myProfile: state.users.myProfile
+}))(UserInfo)
+
+export default class Page extends Component {
   static propTypes = {
     children: PropTypes.any
   }
@@ -27,15 +78,9 @@ export default class extends Component {
               </span>
             </a>
           </Link>
-          <Link href='/about'>
-            <a className='tab-item'>关于我</a>
-          </Link>
-          <Link href='/courses'>
-            <a className='tab-item'>课程</a>
-          </Link>
-          <Link href='/users/signup'>
-            <a className='tab-item'>登录/注册</a>
-          </Link>
+          <MenuItem href='/about'>关于我</MenuItem>
+          <MenuItem href='/courses'>课程</MenuItem>
+          <UserInfo />
         </div>
         {this.props.children}
         <style jsx>{`
@@ -59,15 +104,6 @@ export default class extends Component {
           .logo {
             width: 40px;
             margin-bottom: 3px;
-          }
-          .tab-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255,255,255,0.6);
-            font-size: 14px;
-            white-space: nowrap;
-            flex: 0 0 50px;
           }
         `}</style>
       </div>

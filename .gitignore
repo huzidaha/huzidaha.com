@@ -38,3 +38,4 @@ jspm_packages
 .next
 build
 secrect.js
+static/styles.css

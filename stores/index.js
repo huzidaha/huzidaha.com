@@ -9,7 +9,7 @@ let store = null
 
 const promiseMiddleware = (apiClient) => (store) => (next) => async (action) => {
   if (action.promise) {
-    const result = await action.promise(apiClient)
+    const result = await action.promise(apiClient, next)
     next({ ...action, result })
   } else {
     next(action)

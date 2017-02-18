@@ -6,6 +6,7 @@ const initialState = {}
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_MY_PROFILE:
+    case LOGIN:
       return {
         ...state,
         myProfile: action.result
@@ -22,5 +23,7 @@ export const getMyProfile = () => ({
 
 export const login = (email, password) => ({
   type: LOGIN,
-  promise: (apiClient) => apiClient.post('/users/login', { email, password })
+  promise: async (apiClient, dispatch) => {
+    await apiClient.post('/users/login', { email, password })
+  }
 })
