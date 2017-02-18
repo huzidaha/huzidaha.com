@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import reducer from './reducer'
 import { getHuzidahaProfile } from './huzidahaProfile'
+import { getMyProfile } from './users'
 
 let store = null
 
@@ -36,7 +37,9 @@ export const wrapWithProvider = (PageComponent) => class extends Component {
       : {}
     if (isServer && typeof window === 'undefined') {
       store = createAppStore({}, apiClient)
+      // 在这里初始化 store 中的所有数据
       await store.dispatch(getHuzidahaProfile())
+      await store.dispatch(getMyProfile())
       props.initialState = store.getState()
     }
     return props

@@ -1,7 +1,6 @@
 import { Component, PropTypes } from 'react'
 import Page from '../../components/Page'
-import { twoWayBinding, wrapWithAlertError } from '../../common/utils'
-import { connectApiClient } from '../../common/apiClient.js'
+import { twoWayBinding, wrapWithAlertError, connectAll } from '../../common/utils'
 import _ from 'ramda'
 
 class TagsList extends Component {
@@ -76,4 +75,4 @@ class TagsList extends Component {
   }
 }
 
-export default connectApiClient(TagsList)
+export default connectAll()(TagsList)

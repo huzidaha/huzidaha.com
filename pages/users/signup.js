@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react'
 import Page from '../../components/Page'
 import SignupForm from '../../components/SignupForm'
-import { connectApiClient } from '../../common/apiClient'
+import { connectAll } from '../../common/utils'
 
 class Signup extends Component {
   render () {
@@ -13,4 +13,4 @@ class Signup extends Component {
   }
 }
 
-export default connectApiClient(Signup)
+export default connectAll()(Signup)

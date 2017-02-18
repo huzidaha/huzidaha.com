@@ -50,6 +50,18 @@ router.post('/login', async (ctx) => {
   }
 })
 
+router.post('/logout', async (ctx) => {
+  if (!ctx.state.session.user) {
+    return Promise.reject({
+      status: 401,
+      message: '请先登录'
+    })
+  } else {
+    await ctx.jwtJar.sign({})
+    return Promise.resolve(true)
+  }
+})
+
 router.get('/me', async (ctx) => {
   return ctx.state.session.user || null
 })
