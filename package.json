@@ -49,6 +49,7 @@
   },
   "homepage": "https://github.com/huzidaha/huzidaha.com#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "highlight.js": "^9.9.0",
     "joi": "^10.1.0",
     "jsonwebtoken": "^7.3.0",

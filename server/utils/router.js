@@ -12,13 +12,13 @@ class JWTJar {
     const token = ctx.cookies.get('token')
     return new Promise((resolve, reject) => {
       if (!token) {
-        ctx.state.session = null
+        ctx.state.session = {}
         return resolve(null)
       }
       jwt.verify(token, JWT_SECRECT_KEY, (err, sessionData) => {
         if (err) {
-          ctx.state.session = null
-          console.error(err.message)
+          ctx.state.session = {}
+          console.error('[JWT ERROR]', err.message)
           resolve(null)
         } else {
           ctx.state.session = sessionData
@@ -30,6 +30,7 @@ class JWTJar {
 
   async sign (data) {
     const ctx = this.ctx
+    ctx.state.session = data
     return new Promise((resolve, reject) => {
       jwt.sign(data, JWT_SECRECT_KEY, { expiresIn: '14 days' }, (err, token) => {
         if (err) return reject(err)

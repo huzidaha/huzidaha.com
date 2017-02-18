@@ -20,7 +20,7 @@ export default class extends Component {
         <div className='header'>
           <Link href='/'>
             <a className='home'>
-              <img src='/static/logo.png' className='logo' />
+              {/* <img src='/static/huzidaha-logo.png' className='logo' /> */}
               <span className='stamp'>
                 <span>胡子</span>
                 <span>大哈</span>
@@ -54,13 +54,11 @@ export default class extends Component {
             border-radius: 4px;
             font-size: 12px;
             color: #ffffff;
-            margin-left: 10px;
-            margin-right: 20px;
+            margin-right: 10px;
           }
           .logo {
             width: 40px;
-            height: 40px;
-            marginBottom: 3px;
+            margin-bottom: 3px;
           }
           .tab-item {
             display: flex;
@@ -68,6 +66,7 @@ export default class extends Component {
             justify-content: center;
             color: rgba(255,255,255,0.6);
             font-size: 14px;
+            white-space: nowrap;
             flex: 0 0 50px;
           }
         `}</style>

@@ -31,7 +31,9 @@ function getBackendApiCallback () {
   const koaApp = new Koa()
   const router = new Router()
   Object.keys(require.cache).forEach((key) => {
-    delete require.cache[key]
+    if (!key.match(/node_modules/) || key.match(/mongoose/)) {
+      delete require.cache[key]
+    }
   })
   const apiRouter = require('./routes/').default
   router.use('/api', apiRouter.routes())

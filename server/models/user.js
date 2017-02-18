@@ -1,24 +1,26 @@
 import mongoose from '../stores/mongoose.js'
 import isEmail from 'validator/lib/isEmail'
 import { Schema } from 'mongoose'
+import _ from 'ramda'
 
 const userSchema = new Schema({
   username: {
     type: String,
     required: true,
     unique: true,
-    minilength: 4,
+    minlength: 4,
     maxlength: 30
   },
   nickname: {
     type: String,
     required: true,
-    minilength: 2,
-    maxlength: 16
+    minlength: 2,
+    maxlength: 30
   },
   email: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator: (v, cb) => {
         cb(isEmail(v))
@@ -27,12 +29,18 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
-    minilength: 6,
-    maxlength: 30
+    required: true
   },
   isVerified: Boolean
 })
+
+userSchema.statics.findUserByEmail = async (email) => {
+  return User.findOne({ email })
+}
+
+userSchema.methods.getSafeJSON = function () {
+  return _.pick(['email', 'username', 'nickname', 'isVerified'], this.toJSON())
+}
 
 const User = mongoose.model('User', userSchema)
 

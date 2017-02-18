@@ -1,30 +1,29 @@
 import { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import Link from 'next/link'
 import Button from './Button'
 import Form from './Form'
+import { login } from '../stores/users'
 import { twoWayBinding, wrapWithAlertError } from '../common/utils'
-import apiClient from '../common/apiClient'
 
 const FormItem = Form.Item
 
-export default class SignupForm extends Component {
+class LoginForm extends Component {
   static propTypes = {
-    onSignupSuccess: PropTypes.func
+    onClickLogin: PropTypes.func
   }
 
   constructor () {
     super()
     this.state = {
-      username: '',
       email: '',
       password: ''
     }
   }
 
   handleSumit = wrapWithAlertError(async () => {
-    const ret = await apiClient.post('/users', this.state)
-    if (this.props.onSignupSuccess) {
-      this.props.onSignupSuccess(ret)
+    if (this.props.onClickLogin) {
+      await this.props.onClickLogin(this.state)
     }
   })
 
@@ -32,9 +31,6 @@ export default class SignupForm extends Component {
     const dataBinder = twoWayBinding(this)
     return (
       <Form>
-        <FormItem title='用户名'>
-          <input placeholder='' {...dataBinder('username')} />
-        </FormItem>
         <FormItem title='邮箱'>
           <input placeholder='' {...dataBinder('email')} />
         </FormItem>
@@ -42,11 +38,11 @@ export default class SignupForm extends Component {
           <input placeholder='' type='password' {...dataBinder('password')} />
         </FormItem>
         <FormItem type='buttons'>
-          <Button title='注册' onClick={::this.handleSumit} />
-          <Link className='login' href='/users/login'><a>马上登录</a></Link>
+          <Button title='登录' onClick={::this.handleSumit} />
+          <Link className='signup' href='/users/signup'><a>马上注册</a></Link>
         </FormItem>
         <style jsx>{`
-          .login {
+          .signup {
             font-size: 13px;
           }
         `}</style>
@@ -54,3 +50,9 @@ export default class SignupForm extends Component {
     )
   }
 }
+
+export default connect(null, (dispatch) => {
+  return ({
+    onClickLogin: ({ email, password }) => dispatch(login(email, password))
+  })
+})(LoginForm)

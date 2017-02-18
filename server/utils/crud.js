@@ -23,7 +23,7 @@ export default class Crud {
   }
 
   except (...args) {
-    this.all(_.pull(...args, this.methods))
+    this.all(_.pullAll(args, this.methods))
   }
 
   wrap (before, after, fn) {
