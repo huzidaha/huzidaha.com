@@ -132,7 +132,7 @@ export default class Page extends Component {
             font-size: 12px;
             color: #ffffff;
             margin-right: 10px;
-            margin-left: 10px;
+            margin-left: 5px;
           }
           .logo {
             width: 40px;

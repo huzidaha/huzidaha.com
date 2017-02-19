@@ -6,8 +6,11 @@
   "scripts": {
     "test": "ava",
     "dev": "babel-node ./server/index.js",
-    "start": "NODE_ENV=production node ./index.js",
-    "build": "rm -rf build && next build && babel ./server/ --out-dir build && mv .next ./build && cp -a static ./build/ && cp package.json ./build/"
+    "start": "NODE_ENV=production node ./server/index.js",
+    "build:client": "rm -rf build && next build",
+    "build:server": "babel ./server/ --out-dir build/server/ && babel ./common/ --out-dir build/common/ && babel ./config.js --out-dir build && babel ./secrect.js --out-dir build",
+    "build:move": "mv .next ./build && cp -a static ./build/ && cp package.json ./build/",
+    "build": "npm run build:client && npm run build:server && npm run build:move"
   },
   "repository": {
     "type": "git",

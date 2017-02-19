@@ -20,8 +20,10 @@ function startServer () {
         ? app.oldRun(req, res)
         : serveBackendApi(req, res)
     }
-    compileLessStyle()
-    if (dev) watchFiles()
+    if (dev) {
+      compileLessStyle()
+      watchFiles()
+    }
   }).catch((e) => {
     console.log(e.stack)
   })

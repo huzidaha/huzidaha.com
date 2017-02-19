@@ -11,11 +11,21 @@ export default class MyDocument extends Document {
           <meta name='renderer' content='webkit' />
           <meta httpEquiv='Cache-Control' content='no-siteapp' />
           <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
+          <link rel='icon' type='image/x-icon' href='/static/favicon.ico' />
           <link rel='stylesheet' href='/static/styles.css' />
         </Head>
         <body style={{ backgroundColor: '#f7fafc' }}>
           <Main />
           <NextScript />
+          <script dangerouslySetInnerHTML={{__html: `
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?d5ee7d3fe5b2bec89fac3d2f347d6816";
+              var s = document.getElementsByTagName("script")[0];
+              s.parentNode.insertBefore(hm, s);
+            })();
+          `}} />
         </body>
       </html>
     )
