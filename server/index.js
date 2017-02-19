@@ -18,7 +18,7 @@ function startServer () {
     app.oldRun = app.run
     app.run = (req, res) => {
       return !req.url.startsWith('/api/')
-        ? app.oldRun(req, res, parse(req.url))
+        ? app.oldRun(req, res, parse(req.url, true)) // https://github.com/zeit/next.js/pull/950/files
         : serveBackendApi(req, res)
     }
     if (dev) {
