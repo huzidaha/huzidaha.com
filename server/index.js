@@ -5,6 +5,7 @@ import fs from 'fs'
 import bodyParser from 'koa-body'
 import logger from 'koa-logger'
 import less from 'less'
+import { parse } from 'url'
 import 'isomorphic-fetch'
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -17,7 +18,7 @@ function startServer () {
     app.oldRun = app.run
     app.run = (req, res) => {
       return !req.url.startsWith('/api/')
-        ? app.oldRun(req, res)
+        ? app.oldRun(req, res, parse(req.url))
         : serveBackendApi(req, res)
     }
     if (dev) {
