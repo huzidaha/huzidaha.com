@@ -4,6 +4,7 @@ import Page from '../../components/Page'
 import PostDate from '../../components/PostDate'
 import Profile from '../../components/Profile'
 import { connectAll, asyncObjContruct } from '../../common/utils'
+import MainLayout from '../../components/layouts/MainLayout'
 
 class PostDetail extends Component {
   static propTypes = {
@@ -30,8 +31,8 @@ class PostDetail extends Component {
     const borderStyle = '1px solid #EDEDED'
     return (
       <Page>
-        <div className='content-wrapper'>
-          <div className='main post-wrapper'>
+        <MainLayout>
+          <div className='post-wrapper'>
             <div style={{ padding, borderBottom: borderStyle }}>
               <h1 style={{ fontSize: '20px', fontWeight: 'bold' }}>
                 {post.title}
@@ -40,10 +41,8 @@ class PostDetail extends Component {
             </div>
             <div ref='post-content' style={{ padding }} className='post-content' dangerouslySetInnerHTML={{__html: post.markdownContent}} />
           </div>
-          <div className='sidebar'>
-            <Profile profile={huzidahaProfile} />
-          </div>
-        </div>
+          <Profile profile={huzidahaProfile} />
+        </MainLayout>
       </Page>
     )
   }

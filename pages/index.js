@@ -6,6 +6,7 @@ import PostDate from '../components/PostDate'
 import Pagination from '../components/Pagination'
 import { asyncObjContruct, connectAll } from '../common/utils'
 import { ITEMS_PER_PAGE } from '../common/constants'
+import MainLayout from '../components/layouts/MainLayout'
 
 export class PostSummary extends Component {
   static propTypes = {
@@ -67,8 +68,8 @@ class Index extends Component {
     const { huzidahaProfile, postsCount, currentPage } = this.props
     return (
       <Page>
-        <div className='content-wrapper'>
-          <div className='main'>
+        <MainLayout>
+          <div>
             {this.props.posts.map((post) => {
               return <PostSummary key={post._id} post={post} />
             })}
@@ -78,10 +79,8 @@ class Index extends Component {
               currentPage={currentPage}
               onPageChange={this.handlePageChanged.bind(this)} />
           </div>
-          <div className='sidebar'>
-            <Profile profile={huzidahaProfile} />
-          </div>
-        </div>
+          <Profile profile={huzidahaProfile} />
+        </MainLayout>
       </Page>
     )
   }
