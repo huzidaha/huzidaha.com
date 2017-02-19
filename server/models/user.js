@@ -31,6 +31,10 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
   isVerified: Boolean
 })
 
@@ -39,7 +43,7 @@ userSchema.statics.findUserByEmail = async (email) => {
 }
 
 userSchema.methods.getSafeJSON = function () {
-  return _.pick(['email', 'username', 'nickname', 'isVerified'], this.toJSON())
+  return _.pick(['email', 'username', 'nickname', 'isVerified', 'isAdmin'], this.toJSON())
 }
 
 const User = mongoose.model('User', userSchema)

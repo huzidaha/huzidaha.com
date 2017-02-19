@@ -58,7 +58,7 @@ class MenuItem extends Component {
 /**
  * 处理用户尝试登出、登录的行为
  */
-class UserInfo extends Component {
+export class UserInfo extends Component {
   static propTypes = {
     myProfile: PropTypes.object,
     onLogout: PropTypes.func
@@ -112,9 +112,7 @@ export default class Page extends Component {
               </span>
             </a>
           </Link>
-          <MenuItem href='/about'>关于我</MenuItem>
-          <MenuItem href='/courses'>课程</MenuItem>
-          <UserInfo />
+          <MenuItem href='/'>博客</MenuItem>
         </div>
         {this.props.children}
         <style jsx>{`
@@ -134,6 +132,7 @@ export default class Page extends Component {
             font-size: 12px;
             color: #ffffff;
             margin-right: 10px;
+            margin-left: 10px;
           }
           .logo {
             width: 40px;

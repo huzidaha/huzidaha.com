@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 import reducer from './reducer'
 import { getHuzidahaProfile } from './huzidahaProfile'
 import { getMyProfile } from './users'
+import { requireAuthorization } from '../common/authorization'
 
 let store = null
 
@@ -12,6 +13,7 @@ const promiseMiddleware = (apiClient) => (store) => (next) => async (action) => 
   if (action.promise) {
     const result = await action.promise(apiClient, next)
     next({ ...action, result })
+    return result
   } else {
     next(action)
   }
@@ -35,13 +37,16 @@ export const wrapWithProvider = (PageComponent) => class extends Component {
     const props = PageComponent.getInitialProps
       ? await PageComponent.getInitialProps(ctx)
       : {}
-    if (isServer && typeof window === 'undefined') {
+    if (isServer) {
       store = createAppStore({}, apiClient)
       // 在这里初始化 store 中的所有数据
-      await store.dispatch(getHuzidahaProfile())
       await store.dispatch(getMyProfile())
-      props.initialState = store.getState()
+      await store.dispatch(getHuzidahaProfile())
     }
+    const state = store.getState()
+    const userProfile = state.users.myProfile
+    requireAuthorization(ctx, userProfile)
+    if (isServer) props.initialState = store.getState()
     return props
   }
 

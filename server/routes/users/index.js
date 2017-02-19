@@ -10,8 +10,6 @@ const router = new Router()
 const crud = new Crud(router, User)
 const saltRounds = 10
 
-crud.except('create', 'read')
-
 const userInfoValidateSchema = {
   username: Joi.string().min(4).max(30),
   password: Joi.string().min(6).max(30),
@@ -21,6 +19,7 @@ const userInfoValidateSchema = {
 crud.create(async (ctx) => {
   const { body } = ctx.request
   await validate(body, userInfoValidateSchema)
+  delete body.isAdmin // don't try to fool me
   body.password = await bcrypt.hash(body.password, saltRounds) // never be cracked!
   body.nickname = body.username
 }, async (ctx, ret) => {

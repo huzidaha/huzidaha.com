@@ -56,18 +56,19 @@ export default class CustomRouter extends Router {
     super()
     const methods = ['get', 'post', 'put', 'delete']
     methods.forEach((method) => {
-      this[method] = (path, fn) => {
-        super[method](path, this.wrap(fn))
+      this[method] = (path, ...fns) => {
+        super[method](path, this.wrap(fns))
       }
     })
   }
 
-  wrap (fn) {
+  wrap (fns) {
     return async (ctx) => {
       try {
         ctx.jwtJar = new JWTJar(ctx)
         await ctx.jwtJar.verify()
-        const ret = await fn(ctx)
+        let ret
+        for (let fn of fns) ret = await fn(ctx)
         await ctx.jwtJar.refresh()
         ctx.status = 200
         ctx.body = {
