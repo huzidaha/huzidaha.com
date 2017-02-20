@@ -33,7 +33,7 @@ export const requireAuthorization = (ctx, profile) => {
 
 // Server APIs
 export const apiRequireAdmin = async (ctx) => {
-  const user = await ctx.state.session
+  const { user } = await ctx.state.session
   if (!isAdmin(user)) {
     return Promise.reject({
       status: 401,
