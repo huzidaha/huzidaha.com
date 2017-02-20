@@ -20,6 +20,7 @@ export default class MyDocument extends Document {
           <script dangerouslySetInnerHTML={{__html: `
             var _hmt = _hmt || [];
             (function() {
+              if (window.location.origin.match(/localhost/)) return
               var hm = document.createElement("script");
               hm.src = "https://hm.baidu.com/hm.js?d5ee7d3fe5b2bec89fac3d2f347d6816";
               var s = document.getElementsByTagName("script")[0];
