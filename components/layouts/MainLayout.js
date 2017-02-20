@@ -25,6 +25,7 @@ export default class extends Component {
         <style jsx>{`
           .innerWrapper {
             max-width: 1000px;
+            width: 100%;
           }
           .wrapperDiv {
             margin: 20px 0;

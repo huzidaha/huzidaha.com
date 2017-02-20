@@ -1,13 +1,19 @@
 @import 'resets';
-@import 'default';
+@import 'github';
 @import 'nprogress';
 @import 'vars';
 @import 'flex';
 
 /* 文章内容 markdown 格式 */
 .post-content {
+  word-wrap: break-word;
+
   p, div, code, pre, ol, ul, h2 {
     margin-bottom: 15px;
+  }
+
+  i {
+    font-style: italic;
   }
 
   img {
@@ -15,6 +21,7 @@
   }
 
   pre {
+    display: flex;
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     border-radius: 3px;
     line-height: 17.4px;
@@ -22,17 +29,21 @@
     padding: 16px;
     background-color: #f7f7f7;
     overflow-x: auto;
+    code {
+      padding: 0;
+      border: none;
+      display: inline;
+    }
   }
 
   code {
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     background-color: #f7f7f7;
-    padding: 1px 5px;
+    padding: 0 5px;
     border-radius: 2px;
-  }
-
-  code {
-    padding: 0;
+    padding-top: 2px;
+    border: 1px solid #ccc;
+    margin: 0 2px;
   }
 
   h2, h3, h4 {
@@ -54,6 +65,11 @@
 
   h4 {
     font-size: 1em;
+  }
+
+  hr {
+    border: 1px solid #ededed;
+    margin-bottom: 10px;
   }
 }
 
