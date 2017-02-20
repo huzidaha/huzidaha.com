@@ -25,7 +25,7 @@ export class PostSummary extends Component {
             <h1>
               <Link href={`/posts/detail?postId=${post._id}`}><a>{post.title}</a></Link>
             </h1>
-            <p>{post.summary ? post.summary.slice(0, 150) + '...' : '暂无内容摘要'}</p>
+            <p>{post.summary ? post.summary.slice(0, 100) + '...' : '暂无内容摘要'}</p>
           </div>
         </div>
         <div className='postSummary__downstairs'>

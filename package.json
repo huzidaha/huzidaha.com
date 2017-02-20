@@ -10,7 +10,9 @@
     "build:client": "rm -rf build && next build",
     "build:server": "babel ./server/ --out-dir build/server/ && babel ./common/ --out-dir build/common/ && babel ./config.js --out-dir build && babel ./secrect.js --out-dir build",
     "build:move": "mv .next ./build && cp -a static ./build/ && cp package.json ./build/ && cp deployment.json ./build/",
-    "build": "npm run build:client && npm run build:server && npm run build:move"
+    "build:less": "lessc --clean-css ./styles/index.less static/styles.css ",
+    "build": "npm run build:client && npm run build:server && npm run build:move",
+    "deploy": "git pull && npm run build && pm2 restart huzidaha --env production"
   },
   "repository": {
     "type": "git",
@@ -94,6 +96,7 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "^6.9.0",
     "eslint-plugin-standard": "^2.0.1",
-    "less": "^2.7.2"
+    "less": "^2.7.2",
+    "less-plugin-clean-css": "^1.5.1"
   }
 }
