@@ -15,7 +15,8 @@ class MenuItem extends Component {
   static propTypes = {
     children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]),
     onClickOnMenu: PropTypes.func,
-    href: PropTypes.string
+    href: PropTypes.string,
+    target: PropTypes.string
   }
 
   handleClickOnMenu () {
@@ -28,9 +29,11 @@ class MenuItem extends Component {
     return (
       <div className='tab-item' onClick={::this.handleClickOnMenu}>
         {this.props.href
-          ? <Link href={this.props.href}>
-            <a>{this.props.children}</a>
-          </Link>
+          ? this.props.target
+            ? <a href={this.props.href} target={this.props.target}>{this.props.children}</a>
+            : <Link href={this.props.href}>
+              <a>{this.props.children}</a>
+            </Link>
           : <a>{this.props.children}</a>
         }
         <style jsx>{`
@@ -40,7 +43,7 @@ class MenuItem extends Component {
             justify-content: center;
             font-size: 14px;
             white-space: nowrap;
-            flex: 0 0 50px;
+            padding: 0 10px;
           }
           a {
             cursor: pointer;
@@ -93,9 +96,20 @@ UserInfo = connect((state) => ({
 /**
  * 总体页面包装
  */
-export default class Page extends Component {
+class Page extends Component {
   static propTypes = {
-    children: PropTypes.any
+    children: PropTypes.any,
+    myProfile: PropTypes.object
+  }
+
+  get _isAdmin () {
+    return this.props.myProfile && this.props.myProfile.isAdmin
+  }
+
+  renderIfAdmin (tag) {
+    return this._isAdmin
+      ? tag
+      : null
   }
 
   render () {
@@ -113,6 +127,9 @@ export default class Page extends Component {
             </a>
           </Link>
           <MenuItem href='/'>博客</MenuItem>
+          {this.renderIfAdmin(<MenuItem href='/static/egghead/egghead.html' target='_blank'>胡子课堂</MenuItem>)}
+          {this.renderIfAdmin(<MenuItem href='/posts/list'>文章管理</MenuItem>)}
+          {this.renderIfAdmin(<MenuItem href='/tags/list'>标签管理</MenuItem>)}
         </div>
         {this.props.children}
         <style jsx>{`
@@ -143,3 +160,9 @@ export default class Page extends Component {
     )
   }
 }
+
+Page = connect((state) => ({
+  myProfile: state.users.myProfile
+}))(Page)
+
+export default Page
