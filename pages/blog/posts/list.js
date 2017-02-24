@@ -1,8 +1,8 @@
 import { Component, PropTypes } from 'react'
 import _ from 'ramda'
 import Link from 'next/link'
-import Page from '../../components/Page'
-import { wrapWithAlertError, makeEntityDate, connectAll } from '../../common/utils'
+import Page from '../../../components/Page'
+import { wrapWithAlertError, makeEntityDate, connectAll } from '../../../common/utils'
 
 class PostsList extends Component {
   static async getInitialProps ({ apiClient }) {

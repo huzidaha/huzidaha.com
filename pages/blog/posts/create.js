@@ -1,8 +1,8 @@
 import { Component, PropTypes } from 'react'
 import Link from 'next/link'
 import _ from 'ramda'
-import Page from '../../components/Page'
-import { wrapWithAlertError, twoWayBinding, connectAll } from '../../common/utils'
+import Page from '../../../components/Page'
+import { wrapWithAlertError, twoWayBinding, connectAll } from '../../../common/utils'
 import { Either } from 'ramda-fantasy'
 
 class CreatePosts extends Component {

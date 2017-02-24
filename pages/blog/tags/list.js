@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react'
-import Page from '../../components/Page'
-import { twoWayBinding, wrapWithAlertError, connectAll } from '../../common/utils'
+import Page from '../../../components/Page'
+import { twoWayBinding, wrapWithAlertError, connectAll } from '../../../common/utils'
 import _ from 'ramda'
 
 class TagsList extends Component {

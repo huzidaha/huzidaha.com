@@ -4,7 +4,7 @@ export default class extends Component {
   static propTypes = {
     title: PropTypes.string,
     onClick: PropTypes.func,
-    children: PropTypes.array
+    children: PropTypes.any
   }
 
   handleClickButton (event) {
@@ -18,9 +18,12 @@ export default class extends Component {
       <div className='row center-xs wrapperDiv'>
         <div className='col-xs-12 col-sm-11 col-md-10 col-lg-9 row start-xs innerWrapper'>
           <div className='col-xs-12 col-sm-9 row'>
-            <div className='col-xs-12 mainContent'>{this.props.children[0]}</div>
+            <div className='col-xs-12 mainContent'>{this.props.children[0] || this.props.children}</div>
           </div>
-          <div className='col-xs-12 col-sm-3 sidebarDiv'>{this.props.children[1]}</div>
+          {this.props.children[1]
+            ? <div className='col-xs-12 col-sm-3 sidebarDiv'>{this.props.children[1]}</div>
+            : null
+          }
         </div>
         <style jsx>{`
           .innerWrapper {

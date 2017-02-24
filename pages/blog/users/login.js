@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react'
-import Page from '../../components/Page'
-import LoginForm from '../../components/LoginForm'
-import { connectAll } from '../../common/utils'
+import Page from '../../../components/Page'
+import LoginForm from '../../../components/LoginForm'
+import { connectAll } from '../../../common/utils'
 
 class Login extends Component {
   render () {

@@ -50,7 +50,7 @@ class MenuItem extends Component {
             color: rgba(255,255,255,0.6);
           }
           a:hover {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.8);
           }
         `}</style>
       </div>
@@ -116,23 +116,33 @@ class Page extends Component {
     return (
       <div>
         {/* Header */}
-        <div className='header'>
-          <Link href='/'>
-            <a className='home'>
-              {/* <img src='/static/huzidaha-logo.png' className='logo' /> */}
-              <span className='stamp'>
-                <span>胡子</span>
-                <span>大哈</span>
-              </span>
-            </a>
-          </Link>
-          <MenuItem href='/'>博客</MenuItem>
-          {this.renderIfAdmin(<MenuItem href='/static/egghead/egghead.html' target='_blank'>胡子课堂</MenuItem>)}
-          {this.renderIfAdmin(<MenuItem href='/posts/list'>文章管理</MenuItem>)}
-          {this.renderIfAdmin(<MenuItem href='/tags/list'>标签管理</MenuItem>)}
-        </div>
+        <header className='header row center-xs'>
+          <div className='inner-header col-xs-12 col-sm-11 col-md-10 col-lg-9 row start-xs'>
+            <Link href='/'>
+              <a className='home'>
+                {/* <img src='/static/huzidaha-logo.png' className='logo' /> */}
+                <span className='stamp'>
+                  <span>胡子</span>
+                  <span>大哈</span>
+                </span>
+              </a>
+            </Link>
+            <MenuItem href='/'>博客</MenuItem>
+            {this.renderIfAdmin(<MenuItem href='/static/egghead/egghead.html' target='_blank'>胡子课堂</MenuItem>)}
+            {this.renderIfAdmin(<MenuItem href='/posts/list'>文章管理</MenuItem>)}
+            {this.renderIfAdmin(<MenuItem href='/tags/list'>标签管理</MenuItem>)}
+          </div>
+        </header>
         {this.props.children}
         <style jsx>{`
+          header {
+            background: #1b1920;
+            height: 60px;
+          }
+          .inner-header {
+            width: 100%;
+            max-width: 1000px;
+          }
           .home {
             display: flex;
             align-items: center;

@@ -1,10 +1,10 @@
 import { Component, PropTypes } from 'react'
 import hljs from 'highlight.js'
-import Page from '../../components/Page'
-import PostDate from '../../components/PostDate'
-import Profile from '../../components/Profile'
-import { connectAll, asyncObjContruct } from '../../common/utils'
-import MainLayout from '../../components/layouts/MainLayout'
+import Page from '../../../components/Page'
+import PostDate from '../../../components/PostDate'
+import Profile from '../../../components/Profile'
+import { connectAll, asyncObjContruct } from '../../../common/utils'
+import MainLayout from '../../../components/layouts/MainLayout'
 
 class PostDetail extends Component {
   static propTypes = {
