@@ -32,11 +32,14 @@ export const twoWayBinding = _.curry((component, path) => {
   }
 })
 
-export const wrapWithAlertError = (fn) => async (...params) => {
-  try {
-    await fn(..._.clone(params))
-  } catch (e) {
-    alert(`错误：${e}`)
+export const wrapWithAlertError = (target, key, descriptor) => {
+  const fn = descriptor.value
+  descriptor.value = async function (...params) {
+    try {
+      await fn.apply(this, _.clone(params))
+    } catch (e) {
+      alert(`错误：${e}`)
+    }
   }
 }
 
@@ -53,6 +56,10 @@ export const connectAll = (mapStateToProps, mapDispatchToProps) => _.compose(
   wrapWithProvider,
   connect(mapStateToProps, mapDispatchToProps)
 )
+
+export const removeItem = (arr, i) => {
+  return [...arr.slice(0, i), ...arr.slice(i + 1)]
+}
 
 export const makeFormattedDate = _.curry((format, date) => moment(date).format(format))
 export const showError = (err) => { alert(err) }

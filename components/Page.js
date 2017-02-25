@@ -134,6 +134,7 @@ export default class Page extends Component {
             {this.renderIfAdmin(<MenuItem href='/static/egghead/egghead.html' target='_blank'>胡子课堂</MenuItem>)}
             {this.renderIfAdmin(<MenuItem href='/blog/posts/list'>文章管理</MenuItem>)}
             {this.renderIfAdmin(<MenuItem href='/blog/tags/list'>标签管理</MenuItem>)}
+            {this.renderIfAdmin(<MenuItem href='/courses/list'>课程管理</MenuItem>)}
           </div>
         </header>
         {this.props.children}

@@ -23,6 +23,7 @@ const makeGetUrl = (path, params) => {
 
 export class ApiClient {
   constructor (req) {
+    this.isServer = !!req
     methods.forEach((method) => {
       this[method] = async (path, params) => {
         const headers = {

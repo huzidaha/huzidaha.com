@@ -21,7 +21,7 @@ export default class Commander {
     this.directives.set(directive, command)
   }
 
-  async run (command, name) {
+  async run (command, name, targetPath) {
     if (!this.commands.has(command)) {
       error(`并不存在命令 ${command}`)
     } else {
@@ -53,10 +53,11 @@ export default class Commander {
         )
         // 把替换以后的结果写入目标目录的文件当中
         await fs.writeFileAsync(
-          join(commandInfo.targetDir, `${name}.js`),
+          join(commandInfo.targetDir, targetPath || `${name}.js`),
           template.replace(/<%REPLACE[|\w\d]*?%>/g, replaceFunc),
           'utf-8'
         )
+        console.log('🎁  💐  OK 了，真是 666 👍\n')
       } catch (e) {
         error('错误：' + e.message)
       }

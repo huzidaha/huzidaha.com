@@ -2,7 +2,7 @@ import Commander from './commander'
 import { join } from 'path'
 
 const absPath = (path) => join(__dirname, path)
-const [command, name] = process.argv.slice(2)
+const [command, name, targetPath] = process.argv.slice(2)
 const commander = new Commander()
 
 // 生成 Model 文件
@@ -18,4 +18,4 @@ commander.registerDirective(
   (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`
 )
 
-commander.run(command, name)
+commander.run(command, name, targetPath)

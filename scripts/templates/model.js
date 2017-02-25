@@ -2,7 +2,7 @@ import mongoose from '../stores/mongoose.js'
 import { Schema } from 'mongoose'
 
 const <%REPLACE%>Schema = new Schema({
-  name: string
+  name: String
 }, {
   timestamps: true
 })
