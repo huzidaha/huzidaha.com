@@ -6,7 +6,10 @@ import Profile from '../../../components/Profile'
 import { connectAll, asyncObjContruct } from '../../../common/utils'
 import MainLayout from '../../../components/layouts/MainLayout'
 
-class PostDetail extends Component {
+@connectAll((state) => ({
+  huzidahaProfile: state.huzidahaProfile.profile
+}))
+export default class PostDetail extends Component {
   static propTypes = {
     huzidahaProfile: PropTypes.object,
     post: PropTypes.object
@@ -14,7 +17,7 @@ class PostDetail extends Component {
 
   static async getInitialProps ({ query, apiClient }) {
     return await asyncObjContruct({
-      post: apiClient.get(`/posts/${query.postId}?useMarkdownContent=true`)
+      post: apiClient.get(`/blog/posts/${query.postId}?useMarkdownContent=true`)
     }, apiClient)
   }
 
@@ -47,7 +50,3 @@ class PostDetail extends Component {
     )
   }
 }
-
-export default connectAll((state) => ({
-  huzidahaProfile: state.huzidahaProfile.profile
-}))(PostDetail)

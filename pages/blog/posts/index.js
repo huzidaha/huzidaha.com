@@ -23,7 +23,7 @@ export class PostSummary extends Component {
           }}>{ post.cover ? null : '暂无封面图片' }</div>
           <div className='post-title-and-content'>
             <h1>
-              <Link href={`/posts/detail?postId=${post._id}`}><a>{post.title}</a></Link>
+              <Link href={`/blog/posts/detail?postId=${post._id}`}><a>{post.title}</a></Link>
             </h1>
             <p>{post.summary ? post.summary.slice(0, 100) + '...' : '暂无内容摘要'}</p>
           </div>
@@ -101,12 +101,15 @@ export class PostSummary extends Component {
   }
 }
 
-class Index extends Component {
+@connectAll((state) => ({
+  huzidahaProfile: state.huzidahaProfile.profile
+}))
+export default class Index extends Component {
   static async getInitialProps ({ query, apiClient }) {
     const currentPage = query.page * 1 > 0 ? query.page * 1 : 1
     return await asyncObjContruct({
       posts: apiClient.get(`/posts?offset=${(currentPage - 1) * ITEMS_PER_PAGE}&limit=${ITEMS_PER_PAGE}`),
-      postsCount: apiClient.get('/posts/count'),
+      postsCount: apiClient.get('/blog/posts/count'),
       currentPage
     })
   }
@@ -150,9 +153,3 @@ class Index extends Component {
     )
   }
 }
-
-Index = connectAll((state) => ({
-  huzidahaProfile: state.huzidahaProfile.profile
-}))(Index)
-
-export default Index

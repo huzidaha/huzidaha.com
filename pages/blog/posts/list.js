@@ -4,7 +4,8 @@ import Link from 'next/link'
 import Page from '../../../components/Page'
 import { wrapWithAlertError, makeEntityDate, connectAll } from '../../../common/utils'
 
-class PostsList extends Component {
+@connectAll()
+export default class PostsList extends Component {
   static async getInitialProps ({ apiClient }) {
     return {
       posts: await apiClient.get('/posts')
@@ -22,10 +23,11 @@ class PostsList extends Component {
     }
   }
 
-  handleDeletePost = wrapWithAlertError((post, index) => {
+  @wrapWithAlertError
+  async handleDeletePost (post, index) {
     const { apiClient } = this.props
     const deletePost = async (post) => {
-      await apiClient.delete(`/posts/${post._id}`)
+      await apiClient.delete(`/blog/posts/${post._id}`)
       this.setState({ posts: _.remove(index, 1, this.state.posts) })
     }
     const alwaysConfirm = (word) => () => confirm(word)
@@ -35,19 +37,19 @@ class PostsList extends Component {
       _.F
     )
     confirmDeletePost(post)
-  })
+  }
 
   render () {
     return (
       <Page>
-        <Link>
-          <a href='/posts/create'>新建</a>
+        <Link href='/blog/posts/create'>
+          <a>新建</a>
         </Link>
         <ul>
           {this.state.posts.map((post, i) => {
             return (
               <li key={post._id}>
-                <Link href={`/posts/detail?postId=${post._id}`}>
+                <Link href={`/blog/posts/detail?postId=${post._id}`}>
                   <a>
                     <span>{i + 1}. </span>
                     <span>{post.title}</span>
@@ -56,7 +58,7 @@ class PostsList extends Component {
                   </a>
                 </Link>
                 <button>
-                  <Link href={`/posts/create?postId=${post._id}`}>
+                  <Link href={`/blog/posts/create?postId=${post._id}`}>
                     <a>Edit</a>
                   </Link>
                 </button>
@@ -69,5 +71,3 @@ class PostsList extends Component {
     )
   }
 }
-
-export default connectAll()(PostsList)

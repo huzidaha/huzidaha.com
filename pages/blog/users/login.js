@@ -3,7 +3,8 @@ import Page from '../../../components/Page'
 import LoginForm from '../../../components/LoginForm'
 import { connectAll } from '../../../common/utils'
 
-class Login extends Component {
+@connectAll(null, null)
+export default class Login extends Component {
   render () {
     return (
       <Page>
@@ -12,5 +13,3 @@ class Login extends Component {
     )
   }
 }
-
-export default connectAll(null, null)(Login)

@@ -5,12 +5,22 @@ import Page from '../../../components/Page'
 import { wrapWithAlertError, twoWayBinding, connectAll } from '../../../common/utils'
 import { Either } from 'ramda-fantasy'
 
-class CreatePosts extends Component {
+const defaultPostState = {
+  title: '',
+  content: '',
+  cover: '',
+  tag: '',
+  creatorAvatarUrl: '',
+  summary: ''
+}
+
+@connectAll(null, null)
+export default class CreatePosts extends Component {
   static async getInitialProps ({ query, apiClient }) {
     return {
       tags: await apiClient.get('/tags?offset=0&limit=100000'),
       post: query.postId
-        ? await apiClient.get(`/posts/${query.postId}`)
+        ? await apiClient.get(`/blog/posts/${query.postId}`)
         : null
     }
   }
@@ -24,13 +34,7 @@ class CreatePosts extends Component {
   constructor () {
     super()
     this.state = {
-      post: {
-        title: '',
-        content: '',
-        cover: '',
-        tag: '',
-        summary: ''
-      }
+      post: { ...defaultPostState }
     }
   }
 
@@ -63,24 +67,23 @@ class CreatePosts extends Component {
       _.ifElse(
         _.pipe(Either.isLeft),
         alertProp('value'),
-        _.map(this.sendPost)
+        _.map(::this.sendPost)
       )
     )
     sendOrAlert(this.state.post)
   }
 
-  sendPost = wrapWithAlertError(async (post) => {
+  @wrapWithAlertError
+  async sendPost (post) {
     const { apiClient } = this.props
     if (this._isUpdate) {
-      await apiClient.put(`/posts/${post._id}`, post)
+      await apiClient.put(`/blog/posts/${post._id}`, post)
     } else {
       await apiClient.post('/posts', post)
-      this.setState({
-        post: { title: '', content: '', tag: '' }
-      })
+      this.setState({ ...defaultPostState })
     }
     alert('OK')
-  })
+  }
 
   render () {
     const dataBinder = twoWayBinding(this)
@@ -100,7 +103,7 @@ class CreatePosts extends Component {
               )
             })}
           </select>
-          <Link href='/tags/list'>
+          <Link href='/blog/tags/list'>
             <a>修改标签</a>
           </Link>
         </div>
@@ -111,5 +114,3 @@ class CreatePosts extends Component {
     )
   }
 }
-
-export default connectAll(null, null)(CreatePosts)

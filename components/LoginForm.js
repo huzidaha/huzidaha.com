@@ -8,7 +8,12 @@ import { twoWayBinding, wrapWithAlertError } from '../common/utils'
 
 const FormItem = Form.Item
 
-class LoginForm extends Component {
+@connect(null, (dispatch) => {
+  return ({
+    onClickLogin: ({ email, password }) => dispatch(login(email, password))
+  })
+})
+export default class LoginForm extends Component {
   static propTypes = {
     onClickLogin: PropTypes.func
   }
@@ -21,11 +26,12 @@ class LoginForm extends Component {
     }
   }
 
-  handleSumit = wrapWithAlertError(async () => {
+  @wrapWithAlertError
+  async handleSumit () {
     if (this.props.onClickLogin) {
       await this.props.onClickLogin(this.state)
     }
-  })
+  }
 
   render () {
     const dataBinder = twoWayBinding(this)
@@ -50,9 +56,3 @@ class LoginForm extends Component {
     )
   }
 }
-
-export default connect(null, (dispatch) => {
-  return ({
-    onClickLogin: ({ email, password }) => dispatch(login(email, password))
-  })
-})(LoginForm)

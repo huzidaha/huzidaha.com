@@ -7,9 +7,9 @@ const makeMapFromArr = (arr) => {
 }
 
 const requireAdminPages = makeMapFromArr([
-  '/posts/list',
-  '/posts/create',
-  '/tags/list'
+  '/blog/posts/list',
+  '/blog/posts/create',
+  '/blog/tags/list'
 ])
 
 const isAdmin = (profile) => {

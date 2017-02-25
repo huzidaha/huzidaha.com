@@ -61,17 +61,27 @@ class MenuItem extends Component {
 /**
  * 处理用户尝试登出、登录的行为
  */
+@connect((state) => ({
+  myProfile: state.users.myProfile
+}), (dispatch) => ({
+  onLogout: async () => {
+    if (confirm('确定退出？')) {
+      await dispatch(logout())
+    }
+  }
+}))
 export class UserInfo extends Component {
   static propTypes = {
     myProfile: PropTypes.object,
     onLogout: PropTypes.func
   }
 
-  handleClickOnLogout = wrapWithAlertError(async () => {
+  @wrapWithAlertError
+  async handleClickOnLogout () {
     if (this.props.onLogout && this.props.myProfile) {
       await this.props.onLogout()
     }
-  })
+  }
 
   render () {
     const { myProfile: profile } = this.props
@@ -83,20 +93,13 @@ export class UserInfo extends Component {
   }
 }
 
-UserInfo = connect((state) => ({
-  myProfile: state.users.myProfile
-}), (dispatch) => ({
-  onLogout: async () => {
-    if (confirm('确定退出？')) {
-      await dispatch(logout())
-    }
-  }
-}))(UserInfo)
-
 /**
  * 总体页面包装
  */
-class Page extends Component {
+@connect((state) => ({
+  myProfile: state.users.myProfile
+}))
+export default class Page extends Component {
   static propTypes = {
     children: PropTypes.any,
     myProfile: PropTypes.object
@@ -129,8 +132,8 @@ class Page extends Component {
             </Link>
             <MenuItem href='/'>博客</MenuItem>
             {this.renderIfAdmin(<MenuItem href='/static/egghead/egghead.html' target='_blank'>胡子课堂</MenuItem>)}
-            {this.renderIfAdmin(<MenuItem href='/posts/list'>文章管理</MenuItem>)}
-            {this.renderIfAdmin(<MenuItem href='/tags/list'>标签管理</MenuItem>)}
+            {this.renderIfAdmin(<MenuItem href='/blog/posts/list'>文章管理</MenuItem>)}
+            {this.renderIfAdmin(<MenuItem href='/blog/tags/list'>标签管理</MenuItem>)}
           </div>
         </header>
         {this.props.children}
@@ -170,9 +173,3 @@ class Page extends Component {
     )
   }
 }
-
-Page = connect((state) => ({
-  myProfile: state.users.myProfile
-}))(Page)
-
-export default Page

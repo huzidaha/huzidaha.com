@@ -21,12 +21,13 @@ export default class SignupForm extends Component {
     }
   }
 
-  handleSumit = wrapWithAlertError(async () => {
+  @wrapWithAlertError
+  async handleSumit () {
     const ret = await apiClient.post('/users', this.state)
     if (this.props.onSignupSuccess) {
       this.props.onSignupSuccess(ret)
     }
-  })
+  }
 
   render () {
     const dataBinder = twoWayBinding(this)
