@@ -132,6 +132,9 @@ class Page extends Component {
           {this.renderIfAdmin(<MenuItem href='/tags/list'>标签管理</MenuItem>)}
         </div>
         {this.props.children}
+        <div className='footer'>
+          <a href='http://www.miitbeian.gov.cn' target='_blank'>粤ICP备17021550号</a>
+        </div>
         <style jsx>{`
           .home {
             display: flex;
@@ -154,6 +157,15 @@ class Page extends Component {
           .logo {
             width: 40px;
             margin-bottom: 3px;
+          }
+          .footer {
+            display: flex;
+            height: 100px;
+            width: 100%;
+            background-color: #fff;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
           }
         `}</style>
       </div>
