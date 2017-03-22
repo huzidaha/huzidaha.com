@@ -1,6 +1,6 @@
 import Router from '../../utils/router'
 import Crud from '../../utils/crud'
-import Lesson from '../../models/Lesson'
+import Lesson from '../../models/lesson'
 import { apiRequireAdmin } from '../../../common/authorization'
 
 const router = new Router()
