@@ -1,5 +1,6 @@
 import { Component, PropTypes } from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 import Page from '../components/Page'
 import Profile from '../components/Profile'
 import PostDate from '../components/PostDate'
@@ -136,6 +137,10 @@ export default class Index extends Component {
     const { huzidahaProfile, postsCount, currentPage } = this.props
     return (
       <Page>
+        <Head>
+          <title>胡子大哈</title>
+          <meta name='description' content='胡子大哈 | 提供专业、快速的 Web 前端技术资讯，有深度、有技术含量的 Web 前端技术文章。外国 Web 前端文章翻译，深入思考 Web 前端技术栈，提供高质量原创文章。' />
+        </Head>
         <MainLayout>
           <div>
             {this.props.posts.map((post) => {

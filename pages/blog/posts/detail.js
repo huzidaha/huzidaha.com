@@ -1,5 +1,6 @@
 import { Component, PropTypes } from 'react'
 import hljs from 'highlight.js'
+import Head from 'next/head'
 import Page from '../../../components/Page'
 import PostDate from '../../../components/PostDate'
 import Profile from '../../../components/Profile'
@@ -34,6 +35,10 @@ export default class PostDetail extends Component {
     const borderStyle = '1px solid #EDEDED'
     return (
       <Page>
+        <Head>
+          <title>{post.title} | 胡子大哈</title>
+          <meta name='description' content={post.summary.slice(0, 120) + '...'} />
+        </Head>
         <MainLayout>
           <div className='post-wrapper'>
             <div style={{ padding, borderBottom: borderStyle }}>
