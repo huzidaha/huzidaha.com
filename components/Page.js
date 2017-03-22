@@ -142,7 +142,7 @@ export default class Page extends Component {
         </header>
         {this.props.children}
         <div className='footer'>
-          <a href='http://www.miitbeian.gov.cn' target='_blank'>粤ICP备17021550号</a>
+          <a href='http://www.miitbeian.gov.cn' target='_blank'>粤ICP备17021550-2号</a>
         </div>
         <style jsx>{`
           header {
