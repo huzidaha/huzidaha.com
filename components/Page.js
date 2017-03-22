@@ -141,6 +141,9 @@ export default class Page extends Component {
           </div>
         </header>
         {this.props.children}
+        <div className='footer'>
+          <a href='http://www.miitbeian.gov.cn' target='_blank'>粤ICP备17021550号</a>
+        </div>
         <style jsx>{`
           header {
             background: #1b1920;
@@ -171,6 +174,15 @@ export default class Page extends Component {
           .logo {
             width: 40px;
             margin-bottom: 3px;
+          }
+          .footer {
+            display: flex;
+            height: 100px;
+            width: 100%;
+            background-color: #fff;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
           }
         `}</style>
       </div>
