@@ -17,7 +17,7 @@ export default class PostDetail extends Component {
 
   static async getInitialProps ({ query, apiClient }) {
     return await asyncObjContruct({
-      post: apiClient.get(`/blog/posts/${query.postId}?useMarkdownContent=true`)
+      post: apiClient.get(`/posts/${query.postId}?useMarkdownContent=true`)
     }, apiClient)
   }
 

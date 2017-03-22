@@ -20,7 +20,7 @@ export default class CreatePosts extends Component {
     return {
       tags: await apiClient.get('/tags?offset=0&limit=100000'),
       post: query.postId
-        ? await apiClient.get(`/blog/posts/${query.postId}`)
+        ? await apiClient.get(`/posts/${query.postId}`)
         : null
     }
   }
@@ -77,7 +77,7 @@ export default class CreatePosts extends Component {
   async sendPost (post) {
     const { apiClient } = this.props
     if (this._isUpdate) {
-      await apiClient.put(`/blog/posts/${post._id}`, post)
+      await apiClient.put(`/posts/${post._id}`, post)
     } else {
       await apiClient.post('/posts', post)
       this.setState({ ...defaultPostState })

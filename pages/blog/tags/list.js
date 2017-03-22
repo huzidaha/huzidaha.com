@@ -51,7 +51,7 @@ export default class TagsList extends Component {
   @wrapWithAlertError
   async deleteItem (tag, index) {
     const { apiClient } = this.props
-    await apiClient.delete(`/blog/tags/${tag._id}`)
+    await apiClient.delete(`/tags/${tag._id}`)
     this.setState({
       tags: _.remove(index, 1, this.state.tags)
     })

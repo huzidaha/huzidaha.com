@@ -131,6 +131,9 @@ export default class Page extends Component {
               </a>
             </Link>
             <MenuItem href='/'>博客</MenuItem>
+            <MenuItem href='http://react.huziketang.com' target='_blank'>
+              React.js 小书 <img src='/static/hot.png' />
+            </MenuItem>
             {this.renderIfAdmin(<MenuItem href='/static/egghead/egghead.html' target='_blank'>胡子课堂</MenuItem>)}
             {this.renderIfAdmin(<MenuItem href='/blog/posts/list'>文章管理</MenuItem>)}
             {this.renderIfAdmin(<MenuItem href='/blog/tags/list'>标签管理</MenuItem>)}

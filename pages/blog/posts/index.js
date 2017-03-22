@@ -109,7 +109,7 @@ export default class Index extends Component {
     const currentPage = query.page * 1 > 0 ? query.page * 1 : 1
     return await asyncObjContruct({
       posts: apiClient.get(`/posts?offset=${(currentPage - 1) * ITEMS_PER_PAGE}&limit=${ITEMS_PER_PAGE}`),
-      postsCount: apiClient.get('/blog/posts/count'),
+      postsCount: apiClient.get('/posts/count'),
       currentPage
     })
   }

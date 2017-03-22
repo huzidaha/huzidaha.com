@@ -44,7 +44,7 @@ export default class SignupForm extends Component {
         </FormItem>
         <FormItem type='buttons'>
           <Button title='注册' onClick={::this.handleSumit} />
-          <Link className='login' href='/users/login'><a>马上登录</a></Link>
+          <Link className='login' href='/blog/users/login'><a>马上登录</a></Link>
         </FormItem>
         <style jsx>{`
           .login {

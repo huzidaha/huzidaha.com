@@ -6,9 +6,10 @@ import { wrapWithAlertError, makeEntityDate, connectAll } from '../../../common/
 
 @connectAll()
 export default class PostsList extends Component {
-  static async getInitialProps ({ apiClient }) {
+  static async getInitialProps ({ apiClient, query }) {
+    const { offset, limit } = query
     return {
-      posts: await apiClient.get('/posts')
+      posts: await apiClient.get(`/posts?offset=${offset}&limit=${limit}`)
     }
   }
 
@@ -27,7 +28,7 @@ export default class PostsList extends Component {
   async handleDeletePost (post, index) {
     const { apiClient } = this.props
     const deletePost = async (post) => {
-      await apiClient.delete(`/blog/posts/${post._id}`)
+      await apiClient.delete(`/posts/${post._id}`)
       this.setState({ posts: _.remove(index, 1, this.state.posts) })
     }
     const alwaysConfirm = (word) => () => confirm(word)
