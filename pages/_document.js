@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
           <meta name='renderer' content='webkit' />
           <meta httpEquiv='Cache-Control' content='no-siteapp' />
           <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
-          <meta name="baidu-site-verification" content='eZfmmOaY5i' />
+          <meta name='baidu-site-verification' content='eZfmmOaY5i' />
           <link rel='icon' type='image/x-icon' href='/static/favicon.ico' />
           <link rel='stylesheet' href='/static/styles.css' />
         </Head>
