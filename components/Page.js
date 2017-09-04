@@ -142,7 +142,7 @@ export default class Page extends Component {
         </header>
         {this.props.children}
         <div className='footer'>
-          Copyright © 深圳市云彦腾科技有限责任公司<br/>
+          Copyright © 深圳市云彦腾科技有限责任公司 | 
           <a href='http://www.miitbeian.gov.cn' target='_blank'>粤ICP备17021550-2号</a>
         </div>
         <style jsx>{`
